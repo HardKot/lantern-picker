@@ -48,7 +48,6 @@
     padding-right: max(20px, env(safe-area-inset-right));
   }
 
-  /* ---------- шапка ---------- */
   header{
     display:flex; align-items:center; gap:14px;
     padding-bottom:20px; margin-bottom:26px;
@@ -66,7 +65,6 @@
     letter-spacing:.2em; text-transform:uppercase; color:var(--ink-soft);
   }
 
-  /* ---------- раскладка ---------- */
   .layout{
     display:grid;
     grid-template-columns: 1.1fr 1fr;
@@ -80,7 +78,6 @@
     min-width:0;
   }
 
-  /* ---------- панели ---------- */
   .panel{
     background:var(--card);
     border:1px solid var(--line);
@@ -99,7 +96,6 @@
   }
   .panel h2::after{ content:''; flex:1; height:1px; background:var(--line); }
 
-  /* ---------- колесо ---------- */
   .wheel-panel{ min-height:420px; }
   .wheel-wrap{
     position:relative;
@@ -124,13 +120,7 @@
     filter:drop-shadow(0 3px 5px rgba(60,45,25,.35));
     z-index:3; pointer-events:none;
   }
-  .pointer::after{
-    content:''; position:absolute; left:-4px; top:-13px;
-    width:8px; height:8px; border-radius:50%;
-    background:var(--card); border:1.5px solid var(--accent);
-  }
 
-  /* ---------- кубики ---------- */
   .cubes{
     display:grid;
     grid-template-columns:repeat(auto-fill, minmax(94px,1fr));
@@ -159,7 +149,6 @@
     box-shadow: 0 6px 0 #191510, 0 14px 22px -14px rgba(40,30,18,.9);
   }
 
-  /* ---------- результат ---------- */
   .result-inline{
     display:flex;
     align-items:flex-end;
@@ -192,7 +181,6 @@
     flex-wrap:wrap;
   }
 
-  /* ---------- кнопки ---------- */
   button{
     font-family:var(--sans); cursor:pointer; border:none; background:none;
     touch-action:manipulation;
@@ -228,38 +216,24 @@
     padding:0 4px;
   }
 
-  /* ============================================================
-     ПЛАНШЕТ И МОБИЛЬНЫЕ — одна колонка
-     ============================================================ */
   @media (max-width:860px){
     :root{ --pad-app:20px; --pad-panel:18px; }
-
     .layout{ grid-template-columns:1fr; gap:16px; }
-
     .wheel-panel{ min-height:0; }
     .wheel-wrap{
       flex:0 0 auto;
       aspect-ratio:1 / 1;
-      padding:24px 0 16px; /* сохраняем для корректной позиции указателя */
+      padding:24px 0 16px;
     }
-
     .side{ gap:16px; }
-
     .cubes{ grid-template-columns:repeat(auto-fill, minmax(84px,1fr)); }
     .cube{ min-height:52px; font-size:12px; }
   }
 
-  /* ============================================================
-     МАЛЕНЬКИЕ ТЕЛЕФОНЫ
-     ============================================================ */
   @media (max-width:640px){
     :root{ --pad-app:14px; --pad-panel:16px; }
-
     .app{ padding-top:18px; }
-
-    header{
-      gap:12px; padding-bottom:16px; margin-bottom:18px;
-    }
+    header{ gap:12px; padding-bottom:16px; margin-bottom:18px; }
     .mark svg{ width:32px; height:32px; }
     h1{ font-size:19px; letter-spacing:.12em; }
     .brand p{ font-size:10px; letter-spacing:.16em; margin-top:3px; }
@@ -278,23 +252,13 @@
     .result-item strong{ font-size:17px; }
     .result-label{ font-size:9.5px; }
 
-    .actions{
-      margin-left:0;
-      width:100%;
-      gap:8px;
-    }
+    .actions{ margin-left:0; width:100%; gap:8px; }
     .actions .primary,
-    .actions .ghost{
-      flex:1 1 100%;
-      width:100%;
-    }
+    .actions .ghost{ flex:1 1 100%; width:100%; }
 
     .foot{ margin-top:18px; font-size:11px; }
   }
 
-  /* ============================================================
-     ОЧЕНЬ УЗКИЕ (iPhone SE и подобные)
-     ============================================================ */
   @media (max-width:360px){
     :root{ --pad-app:12px; --pad-panel:14px; }
     h1{ font-size:17px; }
@@ -303,12 +267,10 @@
     .cube{ font-size:10.5px; min-height:44px; }
   }
 
-  /* ---------- очень широкий ландшафт ---------- */
   @media (min-width:861px) and (max-height:600px){
     .wheel-panel{ min-height:auto; }
   }
 
-  /* ---------- prefers-reduced-motion ---------- */
   @media (prefers-reduced-motion: reduce){
     *{ animation-duration:.01ms !important; animation-iteration-count:1 !important;
        transition-duration:.01ms !important; }
@@ -392,6 +354,7 @@
      ============================================================ */
   const CONFIG = {
     milks: [
+      'Молоко',
       'Молоко кокос',
       'Молоко банан',
       'Молоко орех',
@@ -408,13 +371,13 @@
     drinks: [
       {
         name: 'Капучино',
-        milks: ['Молоко кокос', 'Молоко банан', 'Молоко орех'],
+        milks: ['Молоко кокос', 'Молоко банан', 'Молоко орех', 'Молоко',],
         syrups: ['ваниль', 'карамель', 'лесной орех', 'кокос',
                  'солёный карамель', 'Тоффи', 'шоколад', 'амаретто']
       },
       {
         name: 'Латте',
-        milks: ['Молоко кокос', 'Молоко банан', 'Молоко орех'],
+        milks: ['Молоко кокос', 'Молоко банан', 'Молоко орех', 'Молоко',],
         syrups: ['ваниль', 'карамель', 'лесной орех', 'кокос',
                  'лаванда', 'солёный карамель', 'Тоффи',
                  'кленовый', 'малина'],
@@ -429,18 +392,18 @@
       },
       {
         name: 'Флэт уайт',
-        milks: ['Молоко кокос', 'Молоко орех'],
+        milks: ['Молоко кокос', 'Молоко орех', 'Молоко',],
         syrups: ['ваниль', 'карамель', 'лесной орех', 'кокос']
       },
       {
         name: 'Раф',
-        milks: ['Молоко кокос', 'Молоко банан', 'Молоко орех'],
+        milks: ['Молоко кокос', 'Молоко банан', 'Молоко орех', 'Молоко',],
         syrups: ['ваниль', 'лаванда', 'карамель', 'солёный карамель',
                  'кленовый', 'кокос', 'лесной орех']
       },
       {
         name: 'Мокочино',
-        milks: ['Молоко кокос', 'Молоко банан', 'Молоко орех'],
+        milks: ['Молоко кокос', 'Молоко банан', 'Молоко орех', 'Молоко',],
         syrups: ['шоколад', 'карамель', 'лесной орех', 'мята',
                  'кокос', 'Тоффи', 'солёный карамель', 'амаретто'],
         pairing: {
@@ -452,7 +415,7 @@
       },
       {
         name: 'Горячий шоколад',
-        milks: ['Молоко кокос', 'Молоко банан', 'Молоко орех'],
+        milks: ['Молоко кокос', 'Молоко банан', 'Молоко орех', 'Молоко',],
         syrups: ['шоколад', 'карамель', 'мята', 'лесной орех',
                  'Тоффи', 'солёный карамель', 'кокос', 'амаретто'],
         pairing: {
@@ -464,12 +427,12 @@
       },
       {
         name: 'Какао',
-        milks: ['Молоко кокос', 'Молоко банан', 'Молоко орех'],
+        milks: ['Молоко кокос', 'Молоко банан', 'Молоко орех', 'Молоко',],
         syrups: ['шоколад', 'карамель', 'мята', 'ваниль', 'лесной орех']
       },
       {
         name: 'Матча латте',
-        milks: ['Молоко кокос', 'Молоко банан', 'Молоко орех'],
+        milks: ['Молоко кокос', 'Молоко банан', 'Молоко орех', 'Молоко',],
         syrups: ['ваниль', 'лаванда', 'кокос', 'дыня',
                  'клубника', 'малина'],
         pairing: {
@@ -481,19 +444,19 @@
       },
       {
         name: 'Облепиховый напиток',
-        milks: ['Молоко кокос', 'Молоко орех', 'Без молока'],
+        milks: ['Молоко кокос', 'Молоко орех', 'Без молока', 'Молоко',],
         syrups: ['ваниль', 'кленовый', 'дыня', 'мята',
                  'лаванда', 'вишня']
       },
       {
         name: 'Ежевичный напиток',
-        milks: ['Молоко кокос', 'Молоко орех', 'Без молока'],
+        milks: ['Молоко кокос', 'Молоко орех', 'Без молока', 'Молоко',],
         syrups: ['вишня', 'малина', 'клубника', 'чёрная смородина',
                  'ваниль', 'лаванда']
       },
       {
         name: 'Авторский с халвой',
-        milks: ['Молоко кокос', 'Молоко банан', 'Молоко орех'],
+        milks: ['Молоко кокос', 'Молоко банан', 'Молоко орех', 'Молоко',],
         syrups: ['ваниль', 'лесной орех', 'кленовый', 'карамель',
                  'шоколад', 'Тоффи'],
         pairing: {
@@ -504,19 +467,19 @@
       },
       {
         name: 'Цитрусовый раф',
-        milks: ['Молоко кокос', 'Молоко банан'],
+        milks: ['Молоко кокос', 'Молоко банан', 'Молоко',],
         syrups: ['ваниль', 'карамель', 'малина', 'клубника',
                  'дыня', 'лаванда']
       },
       {
         name: 'Сырный раф',
-        milks: ['Молоко кокос', 'Молоко орех'],
+        milks: ['Молоко кокос', 'Молоко орех', 'Молоко',],
         syrups: ['ваниль', 'карамель', 'кленовый',
                  'лесной орех', 'кокос']
       },
       {
         name: 'Ореховый раф',
-        milks: ['Молоко кокос', 'Молоко банан', 'Молоко орех'],
+        milks: ['Молоко кокос', 'Молоко банан', 'Молоко орех', 'Молоко',],
         syrups: ['лесной орех', 'кленовый', 'карамель',
                  'шоколад', 'ваниль', 'Тоффи', 'кокос', 'амаретто'],
         pairing: {
@@ -639,6 +602,63 @@
     draw();
   }
 
+  /* ---------- автоподбор размера шрифта для подписи ---------- */
+  function fitLabel(text, maxLen, baseFs, minFs) {
+    let fs = baseFs;
+
+    // 1) одна строка, плавно уменьшаем шрифт
+    for (; fs >= minFs; fs -= 0.5) {
+      ctx.font = '600 ' + fs + 'px Georgia, "Times New Roman", serif';
+      if (ctx.measureText(text).width <= maxLen) {
+        return { fontSize: fs, lines: [text] };
+      }
+    }
+
+    // 2) две строки по словам — ищем лучшую точку разбиения
+    const words = text.split(' ');
+
+    if (words.length > 1) {
+      fs = baseFs;
+      for (; fs >= minFs; fs -= 0.5) {
+        ctx.font = '600 ' + fs + 'px Georgia, "Times New Roman", serif';
+        let bestMid = 1, bestW = Infinity;
+        for (let m = 1; m < words.length; m++) {
+          const l1 = words.slice(0, m).join(' ');
+          const l2 = words.slice(m).join(' ');
+          const w = Math.max(ctx.measureText(l1).width,
+                             ctx.measureText(l2).width);
+          if (w < bestW) { bestW = w; bestMid = m; }
+        }
+        if (bestW <= maxLen) {
+          return {
+            fontSize: fs,
+            lines: [words.slice(0, bestMid).join(' '),
+                    words.slice(bestMid).join(' ')]
+          };
+        }
+      }
+
+      // 2 строки минимальным шрифтом (даже если чуть шире)
+      ctx.font = '600 ' + minFs + 'px Georgia, "Times New Roman", serif';
+      let bestMid = 1, bestW = Infinity;
+      for (let m = 1; m < words.length; m++) {
+        const l1 = words.slice(0, m).join(' ');
+        const l2 = words.slice(m).join(' ');
+        const w = Math.max(ctx.measureText(l1).width,
+                           ctx.measureText(l2).width);
+        if (w < bestW) { bestW = w; bestMid = m; }
+      }
+      return {
+        fontSize: minFs,
+        lines: [words.slice(0, bestMid).join(' '),
+                words.slice(bestMid).join(' ')]
+      };
+    }
+
+    // 3) одно длинное слово — минимальный шрифт в одну строку
+    return { fontSize: minFs, lines: [text] };
+  }
+
   function draw() {
     if (size < 10) return;
 
@@ -686,41 +706,46 @@
         ctx.stroke();
       }
 
-      const fs = Math.max(9, Math.min(15, R * 0.075));
-      ctx.font = '600 ' + fs + 'px Georgia, "Times New Roman", serif';
-      ctx.textBaseline = 'middle';
+      ctx.restore(); // выходим из поворота колеса — рисуем подписи без него
 
-      const outer = R - 14;
-      const maxW  = outer - R * 0.30;
+      /* ----- подписи ----- */
+      const hub = Math.max(18, R * 0.15);
+      const outer = R - 8;                    // внешний край текста
+      const maxLen = outer - hub - 6;         // доступная радиальная длина
+
+      const baseFs = Math.max(9, Math.min(16, R * 0.085));
+      const minFs = 7;
 
       for (let i = 0; i < n; i++) {
         const mid = -Math.PI / 2 + (i + 0.5) * seg;
         const col = colorFor(i, n);
 
         ctx.save();
-        ctx.rotate(mid);
+        ctx.rotate(mid + state.rotation);
 
         const flip = Math.cos(mid + state.rotation) < 0;
         if (flip) ctx.rotate(Math.PI);
 
         ctx.fillStyle = col.fg;
         ctx.textAlign = flip ? 'left' : 'right';
+        ctx.textBaseline = 'middle';
 
-        let label = drinks[i].name;
-        if (ctx.measureText(label).width > maxW) {
-          while (label.length > 1 &&
-                 ctx.measureText(label + '…').width > maxW) {
-            label = label.slice(0, -1);
-          }
-          label += '…';
+        const fit = fitLabel(drinks[i].name, maxLen, baseFs, minFs);
+        ctx.font = '600 ' + fit.fontSize + 'px Georgia, "Times New Roman", serif';
+
+        const lh = fit.fontSize * 1.1;
+        const startY = -((fit.lines.length - 1) * lh) / 2;
+        const x = flip ? -outer : outer;
+
+        for (let k = 0; k < fit.lines.length; k++) {
+          ctx.fillText(fit.lines[k], x, startY + k * lh);
         }
-        ctx.fillText(label, flip ? -outer : outer, 0);
+
         ctx.restore();
       }
-
-      ctx.restore();
     }
 
+    /* ----- ступица ----- */
     ctx.beginPath();
     ctx.arc(0, 0, Math.max(18, R * 0.15), 0, TAU);
     ctx.fillStyle = '#fffdf8';
@@ -909,7 +934,6 @@
   pickBtn.addEventListener('click', pick);
   resetBtn.addEventListener('click', reset);
 
-  /* пересчёт при изменении размера и при смене ориентации */
   if (window.ResizeObserver) {
     new ResizeObserver(function () { resize(); }).observe(wrap);
   } else {
