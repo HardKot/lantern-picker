@@ -2,7 +2,8 @@
 <html lang="ru">
 <head>
 <meta charset="utf-8">
-<meta name="viewport" content="width=device-width, initial-scale=1">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<meta name="theme-color" content="#f3eee4">
 <title>У фонаря — генератор выбора</title>
 <style>
   :root{
@@ -14,48 +15,64 @@
     --accent:#8c6b3f;
     --accent-2:#c0a375;
     --sans: ui-sans-serif, system-ui, -apple-system, "Segoe UI", Roboto, Arial, sans-serif;
+    --pad-app: 26px;
+    --pad-panel: 20px;
   }
 
   *{ box-sizing:border-box; }
 
+  html{
+    -webkit-text-size-adjust:100%;
+    overflow-x:hidden;
+  }
+
   body{
     margin:0;
     min-height:100vh;
+    min-height:100svh;
     font-family: Georgia, "Times New Roman", serif;
     color:var(--ink);
     background:
       radial-gradient(1100px 520px at 50% -12%, #fffaf1 0%, rgba(255,250,241,0) 62%),
       var(--paper);
     -webkit-font-smoothing:antialiased;
+    -webkit-tap-highlight-color:transparent;
+    overflow-x:hidden;
   }
 
-  .app{ max-width:1120px; margin:0 auto; padding:26px 20px 48px; }
+  .app{
+    max-width:1120px;
+    margin:0 auto;
+    padding:var(--pad-app) 20px calc(var(--pad-app) + env(safe-area-inset-bottom));
+    padding-left: max(20px, env(safe-area-inset-left));
+    padding-right: max(20px, env(safe-area-inset-right));
+  }
 
+  /* ---------- шапка ---------- */
   header{
     display:flex; align-items:center; gap:14px;
     padding-bottom:20px; margin-bottom:26px;
     border-bottom:1px solid var(--line);
   }
-  .mark{ color:var(--accent); display:flex; filter:drop-shadow(0 2px 6px rgba(140,107,63,.25)); }
+  .mark{ color:var(--accent); display:flex; flex:0 0 auto;
+         filter:drop-shadow(0 2px 6px rgba(140,107,63,.25)); }
   h1{
     margin:0; font-size:25px; font-weight:600;
     letter-spacing:.16em; text-transform:uppercase;
+    line-height:1.1;
   }
   .brand p{
     margin:5px 0 0; font-family:var(--sans); font-size:11px;
     letter-spacing:.2em; text-transform:uppercase; color:var(--ink-soft);
   }
 
+  /* ---------- раскладка ---------- */
   .layout{
     display:grid;
     grid-template-columns: 1.1fr 1fr;
     gap:20px;
     align-items:stretch;
   }
-  @media (max-width:860px){
-    .layout{ grid-template-columns:1fr; }
-  }
-
   .side{
     display:flex;
     flex-direction:column;
@@ -63,15 +80,17 @@
     min-width:0;
   }
 
+  /* ---------- панели ---------- */
   .panel{
     background:var(--card);
     border:1px solid var(--line);
     border-radius:16px;
-    padding:20px;
+    padding:var(--pad-panel);
     box-shadow: 0 1px 0 rgba(255,255,255,.8) inset,
                 0 14px 34px -26px rgba(60,45,25,.75);
     display:flex;
     flex-direction:column;
+    min-width:0;
   }
   .panel h2{
     margin:0 0 16px; display:flex; align-items:center; gap:10px;
@@ -80,6 +99,7 @@
   }
   .panel h2::after{ content:''; flex:1; height:1px; background:var(--line); }
 
+  /* ---------- колесо ---------- */
   .wheel-panel{ min-height:420px; }
   .wheel-wrap{
     position:relative;
@@ -88,9 +108,15 @@
     padding:24px 0 16px;
     min-height:0;
   }
-  #wheel{ display:block; border-radius:50%; }
+  #wheel{
+    display:block;
+    border-radius:50%;
+    touch-action:manipulation;
+    user-select:none;
+    -webkit-user-select:none;
+  }
   .pointer{
-    position:absolute; top:4px; left:50%; transform:translateX(-50%);
+    position:absolute; top:-3px; left:50%; transform:translateX(-50%);
     width:0; height:0;
     border-left:11px solid transparent;
     border-right:11px solid transparent;
@@ -104,6 +130,7 @@
     background:var(--card); border:1.5px solid var(--accent);
   }
 
+  /* ---------- кубики ---------- */
   .cubes{
     display:grid;
     grid-template-columns:repeat(auto-fill, minmax(94px,1fr));
@@ -122,6 +149,9 @@
     transition: transform .16s ease, box-shadow .16s ease,
                 background .16s ease, color .16s ease, border-color .16s ease;
     user-select:none;
+    -webkit-user-select:none;
+    touch-action:manipulation;
+    word-break:break-word;
   }
   .cube.active{
     background:var(--ink); color:#f7f1e6; border-color:var(--ink);
@@ -129,7 +159,7 @@
     box-shadow: 0 6px 0 #191510, 0 14px 22px -14px rgba(40,30,18,.9);
   }
 
-  .result-panel{ margin-top:0; }
+  /* ---------- результат ---------- */
   .result-inline{
     display:flex;
     align-items:flex-end;
@@ -159,9 +189,15 @@
   .actions{
     display:flex; gap:10px; align-items:center;
     margin-left:auto;
+    flex-wrap:wrap;
   }
 
-  button{ font-family:var(--sans); cursor:pointer; border:none; background:none; }
+  /* ---------- кнопки ---------- */
+  button{
+    font-family:var(--sans); cursor:pointer; border:none; background:none;
+    touch-action:manipulation;
+    -webkit-tap-highlight-color:transparent;
+  }
   .primary{
     padding:14px 26px; border-radius:11px;
     background:var(--ink); color:#f7f1e6;
@@ -169,6 +205,7 @@
     transition: .18s ease;
     box-shadow: 0 4px 0 #191510, 0 12px 22px -14px rgba(40,30,18,.9);
     white-space:nowrap;
+    min-height:48px;
   }
   .primary:hover:not(:disabled){ background:#3c332b; transform:translateY(-1px); }
   .primary:active:not(:disabled){ transform:translateY(2px); box-shadow:0 2px 0 #191510; }
@@ -180,20 +217,101 @@
     font-size:11px; letter-spacing:.14em; text-transform:uppercase; font-weight:600;
     transition:.18s ease;
     white-space:nowrap;
+    min-height:48px;
   }
   .ghost:hover:not(:disabled){ color:var(--ink); border-color:var(--accent-2); background:#fdfaf4; }
   .ghost:disabled{ opacity:.45; cursor:default; }
 
-  @media (max-width:640px){
-    .result-inline{ align-items:stretch; }
-    .result-item{ flex-basis:100%; }
-    .actions{ margin-left:0; width:100%; }
-    .actions .primary{ flex:1; }
-  }
-
   .foot{
     margin-top:26px; text-align:center;
     font-family:var(--sans); font-size:11.5px; color:var(--ink-soft); letter-spacing:.04em;
+    padding:0 4px;
+  }
+
+  /* ============================================================
+     ПЛАНШЕТ И МОБИЛЬНЫЕ — одна колонка
+     ============================================================ */
+  @media (max-width:860px){
+    :root{ --pad-app:20px; --pad-panel:18px; }
+
+    .layout{ grid-template-columns:1fr; gap:16px; }
+
+    .wheel-panel{ min-height:0; }
+    .wheel-wrap{
+      flex:0 0 auto;
+      aspect-ratio:1 / 1;
+      padding:24px 0 16px; /* сохраняем для корректной позиции указателя */
+    }
+
+    .side{ gap:16px; }
+
+    .cubes{ grid-template-columns:repeat(auto-fill, minmax(84px,1fr)); }
+    .cube{ min-height:52px; font-size:12px; }
+  }
+
+  /* ============================================================
+     МАЛЕНЬКИЕ ТЕЛЕФОНЫ
+     ============================================================ */
+  @media (max-width:640px){
+    :root{ --pad-app:14px; --pad-panel:16px; }
+
+    .app{ padding-top:18px; }
+
+    header{
+      gap:12px; padding-bottom:16px; margin-bottom:18px;
+    }
+    .mark svg{ width:32px; height:32px; }
+    h1{ font-size:19px; letter-spacing:.12em; }
+    .brand p{ font-size:10px; letter-spacing:.16em; margin-top:3px; }
+
+    .panel{ border-radius:14px; }
+    .panel h2{ margin-bottom:12px; font-size:10px; }
+
+    .cubes{ grid-template-columns:repeat(auto-fill, minmax(76px,1fr)); gap:8px; }
+    .cube{
+      min-height:48px; padding:8px 6px;
+      font-size:11px; border-radius:9px;
+    }
+
+    .result-inline{ align-items:stretch; gap:12px; }
+    .result-item{ flex-basis:100%; }
+    .result-item strong{ font-size:17px; }
+    .result-label{ font-size:9.5px; }
+
+    .actions{
+      margin-left:0;
+      width:100%;
+      gap:8px;
+    }
+    .actions .primary,
+    .actions .ghost{
+      flex:1 1 100%;
+      width:100%;
+    }
+
+    .foot{ margin-top:18px; font-size:11px; }
+  }
+
+  /* ============================================================
+     ОЧЕНЬ УЗКИЕ (iPhone SE и подобные)
+     ============================================================ */
+  @media (max-width:360px){
+    :root{ --pad-app:12px; --pad-panel:14px; }
+    h1{ font-size:17px; }
+    .mark svg{ width:28px; height:28px; }
+    .cubes{ grid-template-columns:repeat(auto-fill, minmax(70px,1fr)); gap:6px; }
+    .cube{ font-size:10.5px; min-height:44px; }
+  }
+
+  /* ---------- очень широкий ландшафт ---------- */
+  @media (min-width:861px) and (max-height:600px){
+    .wheel-panel{ min-height:auto; }
+  }
+
+  /* ---------- prefers-reduced-motion ---------- */
+  @media (prefers-reduced-motion: reduce){
+    *{ animation-duration:.01ms !important; animation-iteration-count:1 !important;
+       transition-duration:.01ms !important; }
   }
 </style>
 </head>
@@ -271,20 +389,6 @@
 
   /* ============================================================
      НАСТРОЙКИ — меняйте здесь
-     ------------------------------------------------------------
-     drinks — список напитков. Для каждого:
-       name    — название (видно на колесе)
-       milks   — список молок, допустимых для напитка
-                 ('all' = все из CONFIG.milks)
-       syrups  — список сиропов по умолчанию
-                 ('all' = все из CONFIG.syrups)
-       pairing — (необязательно) уточнение по конкретному молоку:
-                 { 'Название молока': [ ...сиропы ] }
-                 Если для выбранного молока есть ключ — используется
-                 именно этот список сиропов, иначе — drink.syrups.
-
-     milks  — общий список молок (порядок влияет на кубики)
-     syrups — общий список сиропов
      ============================================================ */
   const CONFIG = {
     milks: [
@@ -295,23 +399,10 @@
     ],
 
     syrups: [
-      'Лаванда',
-      'ваниль',
-      'вишня',
-      'дыня',
-      'клубника',
-      'амаретто',
-      'кленовый',
-      'малина',
-      'Тоффи',
-      'карамель',
-      'шоколад',
-      'мята',
-      'кокос',
-      'лесной орех',
-      'солёный карамель',
-      'чёрная смородина',
-      'Без сиропа'
+      'Лаванда', 'ваниль', 'вишня', 'дыня', 'клубника',
+      'амаретто', 'кленовый', 'малина', 'Тоффи', 'карамель',
+      'шоколад', 'мята', 'кокос', 'лесной орех',
+      'солёный карамель', 'чёрная смородина', 'Без сиропа'
     ],
 
     drinks: [
@@ -467,42 +558,31 @@
 
   function getAllowedMilks(drink) {
     if (!drink) return CONFIG.milks.slice();
-
     const allowed = drink.milks;
-
     if (allowed == null || allowed === 'all') return CONFIG.milks.slice();
-
     const filtered = CONFIG.milks.filter(function (m) {
       return allowed.indexOf(m) !== -1;
     });
-
     return filtered.length ? filtered : ['Без молока'];
   }
 
   function getAllowedSyrups(drink, milk) {
     if (!drink) return CONFIG.syrups.slice();
-
     let allowed = drink.syrups;
-
-    if (drink.pairing &&
-        milk &&
+    if (drink.pairing && milk &&
         Object.prototype.hasOwnProperty.call(drink.pairing, milk)) {
       allowed = drink.pairing[milk];
     }
-
     if (allowed == null || allowed === 'all') return CONFIG.syrups.slice();
-
     const filtered = CONFIG.syrups.filter(function (s) {
       return allowed.indexOf(s) !== -1;
     });
-
     return filtered.length ? filtered : ['Без сиропа'];
   }
 
   function colorFor(i, n) {
     const palette = CONFIG.wheel.palette;
     let idx = i % palette.length;
-
     if (i === n - 1 && n % palette.length === 1 && palette.length > 2) {
       idx = 2;
     }
@@ -539,11 +619,15 @@
     const h = wrap.clientHeight;
     if (!w || !h) return;
 
-    const s = Math.floor(Math.min(w, h - 40, 480));
-    if (s < 80 || s === size) return;
+    const cs = getComputedStyle(wrap);
+    const padX = parseFloat(cs.paddingLeft) + parseFloat(cs.paddingRight);
+    const padY = parseFloat(cs.paddingTop)  + parseFloat(cs.paddingBottom);
+
+    const s = Math.floor(Math.min(w - padX, h - padY, 480));
+    if (s < 60 || s === size) return;
 
     size = s;
-    const dpr = window.devicePixelRatio || 1;
+    const dpr = Math.min(window.devicePixelRatio || 1, 3);
 
     canvas.width  = Math.round(size * dpr);
     canvas.height = Math.round(size * dpr);
@@ -665,9 +749,7 @@
 
   function setActiveCube(container, index) {
     const list = container.children;
-    for (let k = 0; k < list.length; k++) {
-      list[k].classList.remove('active');
-    }
+    for (let k = 0; k < list.length; k++) list[k].classList.remove('active');
     if (list[index]) list[index].classList.add('active');
   }
 
@@ -705,10 +787,8 @@
       function frame(now) {
         const t = Math.min(1, (now - t0) / dur);
         const e = 1 - Math.pow(1 - t, 5);
-
         state.rotation = start + (to - start) * e;
         draw();
-
         if (t < 1) {
           requestAnimationFrame(frame);
         } else {
@@ -727,9 +807,8 @@
 
       if (items.length === 1) {
         setActiveCube(container, 0);
-        setTimeout(function () {
-          resolve(items[0]);
-        }, CONFIG.dice.singlePauseMs);
+        setTimeout(function () { resolve(items[0]); },
+          CONFIG.dice.singlePauseMs);
         return;
       }
 
@@ -748,11 +827,9 @@
           resolve(items[target]);
           return;
         }
-
         let r;
-        do {
-          r = Math.floor(Math.random() * n);
-        } while (n > 1 && r === last);
+        do { r = Math.floor(Math.random() * n); }
+        while (n > 1 && r === last);
 
         last = r;
         setActiveCube(container, r);
@@ -761,16 +838,13 @@
         const p = step / total;
         const delay = CONFIG.dice.baseDelayMs +
           Math.pow(p, CONFIG.dice.delayPower) * CONFIG.dice.extraDelayMs;
-
         setTimeout(tick, delay);
       }
       tick();
     });
   }
 
-  function setButtonLabel(text) {
-    pickBtn.textContent = text;
-  }
+  function setButtonLabel(text) { pickBtn.textContent = text; }
 
   function resetResults() {
     state.drink = null;
@@ -781,7 +855,7 @@
     setResult(resMilk, null);
     setResult(resSyrup, null);
 
-    renderCubes(milkCubesEl, getAllowedMilks(null));
+    renderCubes(milkCubesEl, CONFIG.milks);
     renderCubes(syrupCubesEl, CONFIG.syrups);
   }
 
@@ -790,23 +864,16 @@
     state.busy = true;
     pickBtn.disabled = true;
     resetBtn.disabled = true;
-
     resetResults();
 
     try {
-      // 1. Колесо — напиток
       setButtonLabel('Крутим колесо…');
       const drink = await spinWheel();
-
-      if (!drink) {
-        setButtonLabel('Сделать выбор');
-        return;
-      }
+      if (!drink) { setButtonLabel('Сделать выбор'); return; }
 
       state.drink = drink;
       setResult(resDrink, drink.name);
 
-      // 2. Кубики — молоко
       setButtonLabel('Выбираем молоко…');
       const milks = getAllowedMilks(drink);
       renderCubes(milkCubesEl, milks);
@@ -816,7 +883,6 @@
       state.milk = milk;
       setResult(resMilk, milk);
 
-      // 3. Кубики — сироп (с учётом выбранного молока)
       setButtonLabel('Выбираем сироп…');
       const syrups = getAllowedSyrups(drink, milk);
       renderCubes(syrupCubesEl, syrups);
@@ -825,7 +891,6 @@
       const syrup = await rollCubes(syrupCubesEl, syrups);
       state.syrup = syrup;
       setResult(resSyrup, syrup);
-
     } finally {
       state.busy = false;
       pickBtn.disabled = false;
@@ -844,12 +909,16 @@
   pickBtn.addEventListener('click', pick);
   resetBtn.addEventListener('click', reset);
 
+  /* пересчёт при изменении размера и при смене ориентации */
   if (window.ResizeObserver) {
-    new ResizeObserver(resize).observe(wrap);
+    new ResizeObserver(function () { resize(); }).observe(wrap);
   } else {
     window.addEventListener('resize', resize);
   }
   window.addEventListener('resize', resize);
+  window.addEventListener('orientationchange', function () {
+    setTimeout(resize, 200);
+  });
 
   renderCubes(milkCubesEl, CONFIG.milks);
   renderCubes(syrupCubesEl, CONFIG.syrups);
