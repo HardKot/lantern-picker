@@ -48,13 +48,18 @@
     padding-right: max(20px, env(safe-area-inset-right));
   }
 
+  /* ---------- шапка ---------- */
   header{
-    display:flex; align-items:center; gap:14px;
+    display:flex; align-items:center; justify-content:space-between;
+    gap:14px;
     padding-bottom:20px; margin-bottom:26px;
     border-bottom:1px solid var(--line);
   }
-  .mark{ color:var(--accent); display:flex; flex:0 0 auto;
-         filter:drop-shadow(0 2px 6px rgba(140,107,63,.25)); }
+  .brand{ display:flex; align-items:center; gap:14px; min-width:0; }
+  .mark{
+    color:var(--accent); display:flex; flex:0 0 auto;
+    filter:drop-shadow(0 2px 6px rgba(140,107,63,.25));
+  }
   h1{
     margin:0; font-size:25px; font-weight:600;
     letter-spacing:.16em; text-transform:uppercase;
@@ -65,6 +70,18 @@
     letter-spacing:.2em; text-transform:uppercase; color:var(--ink-soft);
   }
 
+  .icon-btn{
+    width:44px; height:44px; border-radius:50%; flex:0 0 auto;
+    border:1px solid var(--line); background:var(--card); color:var(--ink-soft);
+    display:grid; place-items:center; cursor:pointer;
+    transition: .2s ease;
+    touch-action:manipulation;
+    -webkit-tap-highlight-color:transparent;
+  }
+  .icon-btn:hover{ color:var(--ink); border-color:var(--accent-2); transform:translateY(-1px); }
+  .icon-btn:active{ transform:translateY(0); }
+
+  /* ---------- раскладка ---------- */
   .layout{
     display:grid;
     grid-template-columns: 1.1fr 1fr;
@@ -72,21 +89,20 @@
     align-items:stretch;
   }
   .side{
-    display:flex;
-    flex-direction:column;
-    gap:20px;
+    display:flex; flex-direction:column; gap:20px;
     min-width:0;
   }
 
+  /* ---------- панели ---------- */
   .panel{
     background:var(--card);
     border:1px solid var(--line);
     border-radius:16px;
     padding:var(--pad-panel);
-    box-shadow: 0 1px 0 rgba(255,255,255,.8) inset,
-                0 14px 34px -26px rgba(60,45,25,.75);
-    display:flex;
-    flex-direction:column;
+    box-shadow:
+      0 1px 0 rgba(255,255,255,.8) inset,
+      0 14px 34px -26px rgba(60,45,25,.75);
+    display:flex; flex-direction:column;
     min-width:0;
   }
   .panel h2{
@@ -94,8 +110,11 @@
     font-family:var(--sans); font-size:11px; font-weight:600;
     letter-spacing:.2em; text-transform:uppercase; color:var(--ink-soft);
   }
-  .panel h2::after{ content:''; flex:1; height:1px; background:var(--line); }
+  .panel h2::after{
+    content:''; flex:1; height:1px; background:var(--line);
+  }
 
+  /* ---------- колесо ---------- */
   .wheel-panel{ min-height:420px; }
   .wheel-wrap{
     position:relative;
@@ -121,6 +140,7 @@
     z-index:3; pointer-events:none;
   }
 
+  /* ---------- кубики ---------- */
   .cubes{
     display:grid;
     grid-template-columns:repeat(auto-fill, minmax(94px,1fr));
@@ -136,8 +156,10 @@
     border:1px solid var(--line);
     border-radius:10px;
     box-shadow: 0 3px 0 #eae1d0, 0 8px 16px -12px rgba(60,45,25,.9);
-    transition: transform .16s ease, box-shadow .16s ease,
-                background .16s ease, color .16s ease, border-color .16s ease;
+    transition:
+      transform .16s ease, box-shadow .16s ease,
+      background .16s ease, color .16s ease, border-color .16s ease,
+      opacity .2s ease, filter .2s ease;
     user-select:none;
     -webkit-user-select:none;
     touch-action:manipulation;
@@ -148,22 +170,30 @@
     transform:translateY(-3px);
     box-shadow: 0 6px 0 #191510, 0 14px 22px -14px rgba(40,30,18,.9);
   }
+  .cube.disabled{
+    opacity:.35;
+    filter: grayscale(.85);
+    background:#f4efe5;
+    border-color:#ebe3d4;
+    box-shadow:none;
+    transform:none;
+    cursor:default;
+    color:#948a7c;
+  }
 
+  /* ---------- результат ---------- */
   .result-inline{
-    display:flex;
-    align-items:flex-end;
+    display:flex; align-items:flex-end; flex-wrap:wrap;
     gap:22px;
-    flex-wrap:wrap;
   }
   .result-item{
     display:flex; flex-direction:column; gap:4px;
-    flex:1 1 130px;
-    min-width:0;
+    flex:1 1 130px; min-width:0;
   }
   .result-label{
     font-family:var(--sans); font-size:10px; font-weight:600;
-    letter-spacing:.16em; text-transform:uppercase; color:var(--ink-soft);
-    white-space:nowrap;
+    letter-spacing:.16em; text-transform:uppercase;
+    color:var(--ink-soft); white-space:nowrap;
   }
   .result-item strong{
     font-size:18px; font-weight:600; letter-spacing:.01em;
@@ -176,13 +206,14 @@
   }
 
   .actions{
-    display:flex; gap:10px; align-items:center;
+    display:flex; align-items:center; flex-wrap:wrap; gap:10px;
     margin-left:auto;
-    flex-wrap:wrap;
   }
 
+  /* ---------- кнопки ---------- */
   button{
-    font-family:var(--sans); cursor:pointer; border:none; background:none;
+    font-family:var(--sans); cursor:pointer;
+    border:none; background:none;
     touch-action:manipulation;
     -webkit-tap-highlight-color:transparent;
   }
@@ -192,8 +223,7 @@
     font-size:12px; letter-spacing:.14em; text-transform:uppercase; font-weight:600;
     transition: .18s ease;
     box-shadow: 0 4px 0 #191510, 0 12px 22px -14px rgba(40,30,18,.9);
-    white-space:nowrap;
-    min-height:48px;
+    white-space:nowrap; min-height:48px;
   }
   .primary:hover:not(:disabled){ background:#3c332b; transform:translateY(-1px); }
   .primary:active:not(:disabled){ transform:translateY(2px); box-shadow:0 2px 0 #191510; }
@@ -204,20 +234,115 @@
     border:1px solid var(--line); background:transparent; color:var(--ink-soft);
     font-size:11px; letter-spacing:.14em; text-transform:uppercase; font-weight:600;
     transition:.18s ease;
-    white-space:nowrap;
-    min-height:48px;
+    white-space:nowrap; min-height:48px;
   }
-  .ghost:hover:not(:disabled){ color:var(--ink); border-color:var(--accent-2); background:#fdfaf4; }
+  .ghost:hover:not(:disabled){
+    color:var(--ink); border-color:var(--accent-2); background:#fdfaf4;
+  }
   .ghost:disabled{ opacity:.45; cursor:default; }
 
   .foot{
     margin-top:26px; text-align:center;
-    font-family:var(--sans); font-size:11.5px; color:var(--ink-soft); letter-spacing:.04em;
-    padding:0 4px;
+    font-family:var(--sans); font-size:11.5px; color:var(--ink-soft);
+    letter-spacing:.04em; line-height:1.6; padding:0 4px;
+  }
+  .foot small{ display:block; opacity:.8; margin-top:2px; }
+
+  /* ============================================================
+     ПЛАНШЕТ: компактный двухколоночный режим без скролла
+     ============================================================ */
+  @media (max-width: 899px) and (min-width: 600px) and (min-height: 600px),
+         (min-width: 900px) and (max-width: 1200px) and (min-height: 600px) and (max-height: 850px) {
+
+    :root{ --pad-app: 14px; --pad-panel: 12px; }
+
+    header{
+      padding-bottom: 10px;
+      margin-bottom: 12px;
+      gap: 10px;
+    }
+    .brand{ gap: 10px; }
+    h1{ font-size: 17px; letter-spacing: .1em; }
+    .brand p{ font-size: 8.5px; letter-spacing: .14em; margin-top: 2px; }
+    .mark svg{ width: 28px; height: 28px; }
+    .icon-btn{ width: 36px; height: 36px; }
+
+    .layout{ gap: 12px; align-items: stretch; }
+    .side{ gap: 10px; }
+
+    .panel{ padding: 12px; border-radius: 12px; }
+    .panel h2{
+      margin-bottom: 8px;
+      font-size: 10px;
+      letter-spacing: .14em;
+    }
+
+    .wheel-panel{ min-height: 0; }
+    .wheel-wrap{ padding: 6px 0 4px; }
+
+    /* кубики — компактные пилюли */
+    .cubes{
+      display: flex;
+      flex-wrap: wrap;
+      gap: 4px;
+      align-content: flex-start;
+    }
+    .cube{
+      flex: 0 0 auto;
+      min-height: 0;
+      padding: 4px 9px;
+      font-size: 10.5px;
+      line-height: 1.3;
+      border-radius: 6px;
+      box-shadow: 0 1px 0 #eae1d0;
+    }
+    .cube.active{
+      transform: translateY(-1px);
+      box-shadow: 0 2px 0 #191510;
+    }
+    .cube.disabled{ box-shadow: none; }
+
+    /* результат — компактнее */
+    .result-inline{ gap: 10px; }
+    .result-item{ flex: 1 1 80px; gap: 2px; }
+    .result-label{ font-size: 8.5px; letter-spacing: .1em; }
+    .result-item strong{ font-size: 14px; }
+
+    .actions{ gap: 6px; }
+    .actions .primary,
+    .actions .ghost{
+      padding: 8px 14px;
+      min-height: 34px;
+      font-size: 10px;
+      letter-spacing: .1em;
+    }
+
+    .foot{ display: none; }
   }
 
-  @media (max-width:860px){
-    :root{ --pad-app:20px; --pad-panel:18px; }
+  /* Портретная ориентация планшета: равные колонки */
+  @media (max-width: 899px) and (min-width: 600px) and (min-height: 600px){
+    .layout{ grid-template-columns: 1fr 1fr; }
+  }
+
+  /* Ландшафтная ориентация планшета: чуть шире колонка колеса */
+  @media (min-width: 900px) and (max-width: 1200px) and (min-height: 600px) and (max-height: 850px){
+    .layout{ grid-template-columns: 1.05fr 1fr; }
+    .cube{ padding: 5px 10px; font-size: 11px; }
+  }
+
+  /* ============================================================
+     ТЕЛЕФОНЫ: одна колонка, колесо на всю ширину
+     ============================================================ */
+  @media (max-width: 599px){
+    :root{ --pad-app:14px; --pad-panel:16px; }
+    .app{ padding-top:18px; }
+    header{ gap:12px; padding-bottom:16px; margin-bottom:18px; }
+    .mark svg{ width:32px; height:32px; }
+    h1{ font-size:19px; letter-spacing:.12em; }
+    .brand p{ font-size:10px; letter-spacing:.16em; margin-top:3px; }
+    .icon-btn{ width:40px; height:40px; }
+
     .layout{ grid-template-columns:1fr; gap:16px; }
     .wheel-panel{ min-height:0; }
     .wheel-wrap{
@@ -226,22 +351,15 @@
       padding:24px 0 16px;
     }
     .side{ gap:16px; }
-    .cubes{ grid-template-columns:repeat(auto-fill, minmax(84px,1fr)); }
-    .cube{ min-height:52px; font-size:12px; }
-  }
-
-  @media (max-width:640px){
-    :root{ --pad-app:14px; --pad-panel:16px; }
-    .app{ padding-top:18px; }
-    header{ gap:12px; padding-bottom:16px; margin-bottom:18px; }
-    .mark svg{ width:32px; height:32px; }
-    h1{ font-size:19px; letter-spacing:.12em; }
-    .brand p{ font-size:10px; letter-spacing:.16em; margin-top:3px; }
 
     .panel{ border-radius:14px; }
     .panel h2{ margin-bottom:12px; font-size:10px; }
 
-    .cubes{ grid-template-columns:repeat(auto-fill, minmax(76px,1fr)); gap:8px; }
+    .cubes{
+      display: grid;
+      grid-template-columns:repeat(auto-fill, minmax(76px,1fr));
+      gap:8px;
+    }
     .cube{
       min-height:48px; padding:8px 6px;
       font-size:11px; border-radius:9px;
@@ -271,9 +389,260 @@
     .wheel-panel{ min-height:auto; }
   }
 
+  /* ============================================================
+     НАСТРОЙКИ — drawer + overlay
+     ============================================================ */
+  .overlay{
+    position: fixed; inset: 0; z-index: 40;
+    background: rgba(43,38,32,.4);
+    backdrop-filter: blur(2px);
+    -webkit-backdrop-filter: blur(2px);
+    opacity: 0; pointer-events: none;
+    transition: opacity .24s ease;
+  }
+  .overlay.on{ opacity: 1; pointer-events: auto; }
+
+  .drawer{
+    position: fixed; top: 0; right: 0; z-index: 50;
+    height: 100%; width: min(520px, 100vw);
+    display: flex; flex-direction: column;
+    background: var(--card);
+    border-left: 1px solid var(--line);
+    transform: translateX(101%);
+    transition: transform .32s cubic-bezier(.4,0,.2,1);
+    overflow: hidden;
+  }
+  .drawer.on{ transform: none; }
+
+  .drawer-head{
+    display: flex; align-items: center; justify-content: space-between;
+    padding: 20px 22px 16px;
+    border-bottom: 1px solid var(--line);
+    flex: 0 0 auto;
+  }
+  .drawer-head h3{
+    margin: 0; font-size: 17px; font-weight: 600;
+    letter-spacing: .14em; text-transform: uppercase;
+  }
+
+  .close-btn{
+    font-size: 26px; line-height: 1; color: var(--ink-soft);
+    padding: 4px 8px; border-radius: 6px;
+    transition: color .15s, background .15s;
+  }
+  .close-btn:hover{ color: var(--ink); background: #f4ece0; }
+
+  .drawer-body{
+    flex: 1 1 auto;
+    overflow-y: auto;
+    padding: 16px 22px;
+    -webkit-overflow-scrolling: touch;
+  }
+
+  .drawer-foot{
+    flex: 0 0 auto;
+    padding: 14px 22px calc(14px + env(safe-area-inset-bottom));
+    border-top: 1px solid var(--line);
+    background: var(--card);
+    display: flex; flex-direction: column; gap: 8px;
+  }
+
+  .section{
+    border: 1px solid var(--line);
+    border-radius: 12px;
+    margin-bottom: 12px;
+    background: #fefaf3;
+    overflow: hidden;
+  }
+  .section summary{
+    display: flex; align-items: center; gap: 8px;
+    padding: 12px 14px;
+    cursor: pointer; list-style: none;
+    font-family: var(--sans); font-size: 12px; font-weight: 600;
+    letter-spacing: .14em; text-transform: uppercase;
+    color: var(--ink);
+    user-select: none;
+    -webkit-user-select: none;
+  }
+  .section summary::-webkit-details-marker{ display: none; }
+  .section summary::before{
+    content: '▸';
+    transition: transform .15s;
+  }
+  .section[open] summary::before{ transform: rotate(90deg); }
+  .section[open] summary{ border-bottom: 1px solid var(--line); }
+  .count{
+    margin-left: auto;
+    font-family: var(--sans); font-size: 11px; font-weight: 400;
+    letter-spacing: 0; color: var(--ink-soft);
+  }
+
+  .section > .list{
+    padding: 12px 14px 4px;
+  }
+
+  .row{
+    display: grid;
+    grid-template-columns: 1fr 64px 32px;
+    gap: 6px;
+    margin-bottom: 6px;
+    align-items: center;
+  }
+  .row input{
+    width: 100%;
+    font-family: var(--sans); font-size: 13px;
+    color: var(--ink); background: var(--card);
+    border: 1px solid var(--line);
+    border-radius: 7px;
+    padding: 8px 10px;
+    outline: none;
+    transition: border-color .15s;
+  }
+  .row input:focus{ border-color: var(--accent-2); }
+  .row input[type="number"]{
+    text-align: center;
+    padding: 8px 4px;
+  }
+
+  .row-del{
+    width: 32px; height: 32px;
+    border-radius: 7px;
+    color: var(--ink-soft);
+    font-size: 18px; line-height: 1;
+    transition: background .15s, color .15s;
+  }
+  .row-del:hover{ background: #f4ece0; color: #a4462f; }
+
+  .add-btn{
+    display: block;
+    width: calc(100% - 28px);
+    margin: 4px 14px 12px;
+    padding: 10px 14px;
+    border: 1px dashed var(--line);
+    border-radius: 8px;
+    color: var(--ink-soft);
+    font-family: var(--sans); font-size: 12px;
+    transition: border-color .15s, color .15s, background .15s;
+  }
+  .add-btn:hover{
+    border-color: var(--accent-2); color: var(--ink); background: #fdfaf4;
+  }
+
+  .drink-row{
+    border-bottom: 1px dashed var(--line);
+    padding: 8px 0;
+  }
+  .drink-row:last-child{ border-bottom: none; }
+
+  .drink-head{
+    display: grid;
+    grid-template-columns: 28px 1fr 64px 32px;
+    gap: 6px;
+    align-items: center;
+  }
+  .drink-head input{
+    width: 100%;
+    font-family: var(--sans); font-size: 13px;
+    color: var(--ink); background: var(--card);
+    border: 1px solid var(--line);
+    border-radius: 7px;
+    padding: 8px 10px;
+    outline: none;
+    transition: border-color .15s;
+  }
+  .drink-head input:focus{ border-color: var(--accent-2); }
+  .drink-head input[type="number"]{
+    text-align: center;
+    padding: 8px 4px;
+  }
+
+  .expand-btn{
+    width: 28px; height: 32px;
+    color: var(--ink-soft);
+    font-size: 14px;
+    transition: transform .15s;
+  }
+  .expand-btn.open{ transform: rotate(90deg); }
+
+  .drink-body{
+    margin-top: 8px;
+    padding: 10px 12px;
+    background: #fdfaf4;
+    border-radius: 8px;
+  }
+
+  .field{ margin-bottom: 12px; }
+  .field:last-child{ margin-bottom: 0; }
+  .field > label{
+    display: block;
+    margin-bottom: 6px;
+    font-family: var(--sans); font-size: 10.5px; font-weight: 600;
+    letter-spacing: .12em; text-transform: uppercase;
+    color: var(--ink-soft);
+  }
+
+  .chips{
+    display: flex; flex-wrap: wrap; gap: 6px;
+  }
+  .chip{
+    display: inline-flex; align-items: center; gap: 4px;
+    padding: 5px 10px;
+    font-family: var(--sans); font-size: 11.5px;
+    border: 1px solid var(--line);
+    border-radius: 20px;
+    background: var(--card);
+    color: var(--ink-soft);
+    cursor: pointer;
+    user-select: none;
+    -webkit-user-select: none;
+    transition: .15s;
+  }
+  .chip input{ display: none; }
+  .chip.checked{
+    background: var(--ink); color: #f7f1e6; border-color: var(--ink);
+  }
+
+  .pairing{
+    margin-top: 8px;
+    padding: 10px;
+    background: var(--card);
+    border: 1px solid var(--line);
+    border-radius: 8px;
+  }
+  .pairing-head{
+    display: grid;
+    grid-template-columns: 1fr 32px;
+    gap: 6px;
+    margin-bottom: 8px;
+    align-items: center;
+  }
+  .pairing-head select{
+    width: 100%;
+    font-family: var(--sans); font-size: 12px;
+    color: var(--ink); background: var(--card);
+    border: 1px solid var(--line);
+    border-radius: 7px;
+    padding: 7px 9px;
+    outline: none;
+    cursor: pointer;
+  }
+  .pairing-head select:focus{ border-color: var(--accent-2); }
+
+  .err{
+    margin: 0 0 4px;
+    min-height: 16px;
+    font-family: var(--sans); font-size: 12px;
+    color: #a4462f;
+    white-space: pre-line;
+    line-height: 1.4;
+  }
+
   @media (prefers-reduced-motion: reduce){
-    *{ animation-duration:.01ms !important; animation-iteration-count:1 !important;
-       transition-duration:.01ms !important; }
+    *{
+      animation-duration:.01ms !important;
+      animation-iteration-count:1 !important;
+      transition-duration:.01ms !important;
+    }
   }
 </style>
 </head>
@@ -281,21 +650,32 @@
 
 <div class="app">
   <header>
-    <span class="mark">
-      <svg width="38" height="38" viewBox="0 0 40 40" fill="none" aria-hidden="true">
-        <path d="M20 4v3" stroke="currentColor" stroke-width="1.6" stroke-linecap="round"/>
-        <path d="M14.5 7h11" stroke="currentColor" stroke-width="1.6" stroke-linecap="round"/>
-        <path d="M14 10h12l2 17.6a3 3 0 0 1-3 3.4H15a3 3 0 0 1-3-3.4L14 10Z"
-              stroke="currentColor" stroke-width="1.6" stroke-linejoin="round"/>
-        <path d="M13 14h14" stroke="currentColor" stroke-width="1" opacity=".3"/>
-        <circle cx="20" cy="21" r="4.4" fill="currentColor" opacity=".22"/>
-        <circle cx="20" cy="21" r="1.7" fill="currentColor"/>
-      </svg>
-    </span>
-    <div>
-      <h1>У фонаря</h1>
-      <p>кофейня · генератор выбора</p>
+    <div class="brand">
+      <span class="mark">
+        <svg width="38" height="38" viewBox="0 0 40 40" fill="none" aria-hidden="true">
+          <path d="M20 4v3" stroke="currentColor" stroke-width="1.6" stroke-linecap="round"/>
+          <path d="M14.5 7h11" stroke="currentColor" stroke-width="1.6" stroke-linecap="round"/>
+          <path d="M14 10h12l2 17.6a3 3 0 0 1-3 3.4H15a3 3 0 0 1-3-3.4L14 10Z"
+                stroke="currentColor" stroke-width="1.6" stroke-linejoin="round"/>
+          <path d="M13 14h14" stroke="currentColor" stroke-width="1" opacity=".3"/>
+          <circle cx="20" cy="21" r="4.4" fill="currentColor" opacity=".22"/>
+          <circle cx="20" cy="21" r="1.7" fill="currentColor"/>
+        </svg>
+      </span>
+      <div>
+        <h1>У фонаря</h1>
+        <p>кофейня · генератор выбора</p>
+      </div>
     </div>
+
+    <button class="icon-btn" id="settingsBtn" aria-label="Настройки" title="Настройки">
+      <svg width="20" height="20" viewBox="0 0 24 24" fill="none"
+           stroke="currentColor" stroke-width="1.6" stroke-linecap="round">
+        <path d="M3 7h9M17 7h4M3 17h4M11 17h10"/>
+        <circle cx="14.5" cy="7" r="2.3"/>
+        <circle cx="8.5" cy="17" r="2.3"/>
+      </svg>
+    </button>
   </header>
 
   <main class="layout">
@@ -342,355 +722,436 @@
     </div>
   </main>
 
-  <p class="foot">Нажмите «Сделать выбор» — колесо крутится, затем бросаются кубики.</p>
+  <p class="foot">
+    Нажмите «Сделать выбор» — колесо крутится, затем бросаются кубики.
+    <small>Серые добавки не сочетаются с напитком.</small>
+  </p>
 </div>
+
+<!-- ============ НАСТРОЙКИ ============ -->
+<div class="overlay" id="overlay"></div>
+
+<aside class="drawer" id="drawer" aria-hidden="true">
+  <header class="drawer-head">
+    <h3>Настройки меню</h3>
+    <button class="close-btn" id="closeDrawer" aria-label="Закрыть">×</button>
+  </header>
+
+  <div class="drawer-body">
+    <details class="section" open>
+      <summary>Молоко <span class="count" id="milkCount">0</span></summary>
+      <div class="list" id="milkList"></div>
+      <button class="add-btn" id="addMilkBtn">+ молоко</button>
+    </details>
+
+    <details class="section">
+      <summary>Сиропы <span class="count" id="syrupCount">0</span></summary>
+      <div class="list" id="syrupList"></div>
+      <button class="add-btn" id="addSyrupBtn">+ сироп</button>
+    </details>
+
+    <details class="section">
+      <summary>Напитки <span class="count" id="drinkCount">0</span></summary>
+      <div class="list" id="drinkList"></div>
+      <button class="add-btn" id="addDrinkBtn">+ напиток</button>
+    </details>
+  </div>
+
+  <footer class="drawer-foot">
+    <p class="err" id="err"></p>
+    <button class="primary" id="saveSettings">Сохранить</button>
+    <button class="ghost" id="resetDefaults">Вернуть стандартное меню</button>
+  </footer>
+</aside>
 
 <script>
 (function () {
   'use strict';
 
   /* ============================================================
-     НАСТРОЙКИ — меняйте здесь
+     DEFAULT MENU
      ============================================================ */
-  const CONFIG = {
+  const DEFAULT_MENU = {
     milks: [
-      'Молоко',
-      'Молоко кокос',
-      'Молоко банан',
-      'Молоко орех',
-      'Без молока'
+      'Обычное молоко', 'Молоко кокос', 'Молоко банан',
+      'Молоко орех', 'Без молока'
     ],
-
     syrups: [
-      'Лаванда', 'ваниль', 'вишня', 'дыня', 'клубника',
-      'амаретто', 'кленовый', 'малина', 'Тоффи', 'карамель',
-      'шоколад', 'мята', 'кокос', 'лесной орех',
-      'солёный карамель', 'чёрная смородина', 'Без сиропа'
+      'Лаванда', 'Ваниль', 'Вишня', 'Дыня', 'Клубника',
+      'Амаретто', 'Кленовый', 'Малина', 'Тоффи', 'Карамель',
+      'Шоколад', 'Мята', 'Кокос', 'Лесной орех',
+      'Солёный карамель', 'Чёрная смородина', 'Без сиропа'
     ],
-
-    drinks: [
-      {
-        name: 'Капучино',
-        milks: ['Молоко кокос', 'Молоко банан', 'Молоко орех', 'Молоко',],
-        syrups: ['ваниль', 'карамель', 'лесной орех', 'кокос',
-                 'солёный карамель', 'Тоффи', 'шоколад', 'амаретто']
-      },
-      {
-        name: 'Латте',
-        milks: ['Молоко кокос', 'Молоко банан', 'Молоко орех', 'Молоко',],
-        syrups: ['ваниль', 'карамель', 'лесной орех', 'кокос',
-                 'лаванда', 'солёный карамель', 'Тоффи',
-                 'кленовый', 'малина'],
-        pairing: {
-          'Молоко банан': ['ваниль', 'карамель', 'шоколад',
-                           'лесной орех', 'Тоффи', 'клубника'],
-          'Молоко кокос': ['ваниль', 'карамель', 'кокос', 'лаванда',
-                           'Тоффи', 'солёный карамель'],
-          'Молоко орех':  ['ваниль', 'карамель', 'лесной орех',
-                           'кленовый', 'Тоффи']
-        }
-      },
-      {
-        name: 'Флэт уайт',
-        milks: ['Молоко кокос', 'Молоко орех', 'Молоко',],
-        syrups: ['ваниль', 'карамель', 'лесной орех', 'кокос']
-      },
-      {
-        name: 'Раф',
-        milks: ['Молоко кокос', 'Молоко банан', 'Молоко орех', 'Молоко',],
-        syrups: ['ваниль', 'лаванда', 'карамель', 'солёный карамель',
-                 'кленовый', 'кокос', 'лесной орех']
-      },
-      {
-        name: 'Мокочино',
-        milks: ['Молоко кокос', 'Молоко банан', 'Молоко орех', 'Молоко',],
-        syrups: ['шоколад', 'карамель', 'лесной орех', 'мята',
-                 'кокос', 'Тоффи', 'солёный карамель', 'амаретто'],
-        pairing: {
-          'Молоко банан': ['шоколад', 'карамель', 'лесной орех',
-                           'Тоффи', 'клубника'],
-          'Молоко кокос': ['шоколад', 'карамель', 'кокос',
-                           'Тоффи', 'солёный карамель']
-        }
-      },
-      {
-        name: 'Горячий шоколад',
-        milks: ['Молоко кокос', 'Молоко банан', 'Молоко орех', 'Молоко',],
-        syrups: ['шоколад', 'карамель', 'мята', 'лесной орех',
-                 'Тоффи', 'солёный карамель', 'кокос', 'амаретто'],
-        pairing: {
-          'Молоко банан': ['шоколад', 'карамель', 'лесной орех',
-                           'Тоффи', 'клубника'],
-          'Молоко кокос': ['шоколад', 'карамель', 'кокос',
-                           'Тоффи', 'солёный карамель']
-        }
-      },
-      {
-        name: 'Какао',
-        milks: ['Молоко кокос', 'Молоко банан', 'Молоко орех', 'Молоко',],
-        syrups: ['шоколад', 'карамель', 'мята', 'ваниль', 'лесной орех']
-      },
-      {
-        name: 'Матча латте',
-        milks: ['Молоко кокос', 'Молоко банан', 'Молоко орех', 'Молоко',],
-        syrups: ['ваниль', 'лаванда', 'кокос', 'дыня',
-                 'клубника', 'малина'],
-        pairing: {
-          'Молоко банан': ['ваниль', 'кокос', 'дыня',
-                           'клубника', 'малина'],
-          'Молоко кокос': ['ваниль', 'лаванда', 'кокос', 'дыня'],
-          'Молоко орех':  ['ваниль', 'лаванда', 'кокос', 'дыня', 'клубника']
-        }
-      },
-      {
-        name: 'Облепиховый напиток',
-        milks: ['Молоко кокос', 'Молоко орех', 'Без молока', 'Молоко',],
-        syrups: ['ваниль', 'кленовый', 'дыня', 'мята',
-                 'лаванда', 'вишня']
-      },
-      {
-        name: 'Ежевичный напиток',
-        milks: ['Молоко кокос', 'Молоко орех', 'Без молока', 'Молоко',],
-        syrups: ['вишня', 'малина', 'клубника', 'чёрная смородина',
-                 'ваниль', 'лаванда']
-      },
-      {
-        name: 'Авторский с халвой',
-        milks: ['Молоко кокос', 'Молоко банан', 'Молоко орех', 'Молоко',],
-        syrups: ['ваниль', 'лесной орех', 'кленовый', 'карамель',
-                 'шоколад', 'Тоффи'],
-        pairing: {
-          'Молоко кокос': ['ваниль', 'карамель', 'шоколад', 'Тоффи'],
-          'Молоко орех':  ['ваниль', 'лесной орех', 'кленовый',
-                           'карамель', 'шоколад', 'Тоффи']
-        }
-      },
-      {
-        name: 'Цитрусовый раф',
-        milks: ['Молоко кокос', 'Молоко банан', 'Молоко',],
-        syrups: ['ваниль', 'карамель', 'малина', 'клубника',
-                 'дыня', 'лаванда']
-      },
-      {
-        name: 'Сырный раф',
-        milks: ['Молоко кокос', 'Молоко орех', 'Молоко',],
-        syrups: ['ваниль', 'карамель', 'кленовый',
-                 'лесной орех', 'кокос']
-      },
-      {
-        name: 'Ореховый раф',
-        milks: ['Молоко кокос', 'Молоко банан', 'Молоко орех', 'Молоко',],
-        syrups: ['лесной орех', 'кленовый', 'карамель',
-                 'шоколад', 'ваниль', 'Тоффи', 'кокос', 'амаретто'],
-        pairing: {
-          'Молоко кокос': ['лесной орех', 'карамель', 'шоколад',
-                           'Тоффи', 'кокос'],
-          'Молоко банан': ['карамель', 'шоколад', 'ваниль', 'Тоффи']
-        }
-      }
-    ],
-
-    wheel: {
-      spinDurationMs: 3200,
-      extraTurnsMin: 5,
-      extraTurnsMax: 7,
-      palette: [
-        { bg: '#403830', fg: '#f7f1e6' },
-        { bg: '#e7dbc8', fg: '#3a322a' },
-        { bg: '#9c8464', fg: '#fffaf2' },
-        { bg: '#f4ece0', fg: '#3a322a' },
-        { bg: '#6e6052', fg: '#f7f1e6' },
-        { bg: '#cdb894', fg: '#3a322a' },
-        { bg: '#5a4a3a', fg: '#f7f1e6' },
-        { bg: '#d9c9a8', fg: '#3a322a' }
-      ]
+    milkWeights: {
+      'Обычное молоко': 2, 'Молоко кокос': 1, 'Молоко банан': 1,
+      'Молоко орех': 1, 'Без молока': 0.5
     },
-
-    dice: {
-      minTicks: 10,
-      maxTicks: 16,
-      baseDelayMs: 40,
-      extraDelayMs: 200,
-      delayPower: 3,
-      singlePauseMs: 320
-    }
+    syrupWeights: {
+      'Без сиропа': 0.5, 'Карамель': 2, 'Ваниль': 2
+    },
+    drinks: [
+      { name: 'Капучино', weight: 1,
+        milks: ['Обычное молоко', 'Молоко кокос', 'Молоко банан', 'Молоко орех'],
+        syrups: ['Ваниль', 'Карамель', 'Лесной орех', 'Кокос',
+                 'Солёный карамель', 'Тоффи', 'Шоколад', 'Амаретто'] },
+      { name: 'Латте', weight: 2,
+        milks: ['Обычное молоко', 'Молоко кокос', 'Молоко банан', 'Молоко орех'],
+        syrups: ['Ваниль', 'Карамель', 'Лесной орех', 'Кокос',
+                 'Лаванда', 'Солёный карамель', 'Тоффи', 'Кленовый', 'Малина'],
+        pairing: {
+          'Молоко банан': ['Ваниль', 'Карамель', 'Шоколад', 'Лесной орех', 'Тоффи', 'Клубника'],
+          'Молоко кокос': ['Ваниль', 'Карамель', 'Кокос', 'Лаванда', 'Тоффи', 'Солёный карамель'],
+          'Молоко орех':  ['Ваниль', 'Карамель', 'Лесной орех', 'Кленовый', 'Тоффи']
+        } },
+      { name: 'Флэт уайт', weight: 1,
+        milks: ['Обычное молоко', 'Молоко кокос', 'Молоко орех'],
+        syrups: ['Ваниль', 'Карамель', 'Лесной орех', 'Кокос'] },
+      { name: 'Раф', weight: 1,
+        milks: ['Обычное молоко', 'Молоко кокос', 'Молоко банан', 'Молоко орех'],
+        syrups: ['Ваниль', 'Лаванда', 'Карамель', 'Солёный карамель',
+                 'Кленовый', 'Кокос', 'Лесной орех'] },
+      { name: 'Мокочино', weight: 1,
+        milks: ['Обычное молоко', 'Молоко кокос', 'Молоко банан', 'Молоко орех'],
+        syrups: ['Шоколад', 'Карамель', 'Лесной орех', 'Мята',
+                 'Кокос', 'Тоффи', 'Солёный карамель', 'Амаретто'],
+        pairing: {
+          'Молоко банан': ['Шоколад', 'Карамель', 'Лесной орех', 'Тоффи', 'Клубника'],
+          'Молоко кокос': ['Шоколад', 'Карамель', 'Кокос', 'Тоффи', 'Солёный карамель']
+        } },
+      { name: 'Горячий шоколад', weight: 1,
+        milks: ['Обычное молоко', 'Молоко кокос', 'Молоко банан', 'Молоко орех'],
+        syrups: ['Шоколад', 'Карамель', 'Мята', 'Лесной орех',
+                 'Тоффи', 'Солёный карамель', 'Кокос', 'Амаретто'],
+        pairing: {
+          'Молоко банан': ['Шоколад', 'Карамель', 'Лесной орех', 'Тоффи', 'Клубника'],
+          'Молоко кокос': ['Шоколад', 'Карамель', 'Кокос', 'Тоффи', 'Солёный карамель']
+        } },
+      { name: 'Какао', weight: 1,
+        milks: ['Обычное молоко', 'Молоко кокос', 'Молоко банан', 'Молоко орех'],
+        syrups: ['Шоколад', 'Карамель', 'Мята', 'Ваниль', 'Лесной орех'] },
+      { name: 'Матча латте', weight: 1,
+        milks: ['Обычное молоко', 'Молоко кокос', 'Молоко банан', 'Молоко орех'],
+        syrups: ['Ваниль', 'Лаванда', 'Кокос', 'Дыня', 'Клубника', 'Малина'],
+        pairing: {
+          'Молоко банан': ['Ваниль', 'Кокос', 'Дыня', 'Клубника', 'Малина'],
+          'Молоко кокос': ['Ваниль', 'Лаванда', 'Кокос', 'Дыня'],
+          'Молоко орех':  ['Ваниль', 'Лаванда', 'Кокос', 'Дыня', 'Клубника']
+        } },
+      { name: 'Облепиховый напиток', weight: 1,
+        milks: ['Обычное молоко', 'Молоко кокос', 'Молоко орех', 'Без молока'],
+        syrups: ['Ваниль', 'Кленовый', 'Дыня', 'Мята', 'Лаванда', 'Вишня'] },
+      { name: 'Ежевичный напиток', weight: 1,
+        milks: ['Обычное молоко', 'Молоко кокос', 'Молоко орех', 'Без молока'],
+        syrups: ['Вишня', 'Малина', 'Клубника', 'Чёрная смородина', 'Ваниль', 'Лаванда'] },
+      { name: 'Авторский с халвой', weight: 1,
+        milks: ['Обычное молоко', 'Молоко кокос', 'Молоко банан', 'Молоко орех'],
+        syrups: ['Ваниль', 'Лесной орех', 'Кленовый', 'Карамель', 'Шоколад', 'Тоффи'],
+        pairing: {
+          'Молоко кокос': ['Ваниль', 'Карамель', 'Шоколад', 'Тоффи'],
+          'Молоко орех':  ['Ваниль', 'Лесной орех', 'Кленовый', 'Карамель', 'Шоколад', 'Тоффи']
+        } },
+      { name: 'Цитрусовый раф', weight: 1,
+        milks: ['Обычное молоко', 'Молоко кокос', 'Молоко банан'],
+        syrups: ['Ваниль', 'Карамель', 'Малина', 'Клубника', 'Дыня', 'Лаванда'] },
+      { name: 'Сырный раф', weight: 1,
+        milks: ['Обычное молоко', 'Молоко кокос', 'Молоко орех'],
+        syrups: ['Ваниль', 'Карамель', 'Кленовый', 'Лесной орех', 'Кокос'] },
+      { name: 'Ореховый раф', weight: 1,
+        milks: ['Обычное молоко', 'Молоко кокос', 'Молоко банан', 'Молоко орех'],
+        syrups: ['Лесной орех', 'Кленовый', 'Карамель', 'Шоколад',
+                 'Ваниль', 'Тоффи', 'Кокос', 'Амаретто'],
+        pairing: {
+          'Молоко кокос': ['Лесной орех', 'Карамель', 'Шоколад', 'Тоффи', 'Кокос'],
+          'Молоко банан': ['Карамель', 'Шоколад', 'Ваниль', 'Тоффи']
+        } }
+    ]
   };
-  /* ============================================================ */
 
+  const STORAGE_KEY = 'lantern.menu.v1';
+
+  /* ============================================================
+     buildMenu
+     ============================================================ */
+  function buildMenu(source) {
+    const problems = [];
+    const norm = s => String(s ?? '').trim().replace(/\s+/g, ' ');
+
+    const milks  = [...new Set(source.milks.map(norm).filter(Boolean))];
+    const syrups = [...new Set(source.syrups.map(norm).filter(Boolean))];
+
+    if (milks.length  !== source.milks.length)  problems.push('Молоко: есть дубликаты или пустые');
+    if (syrups.length !== source.syrups.length) problems.push('Сиропы: есть дубликаты или пустые');
+
+    const milkSet  = new Set(milks);
+    const syrupSet = new Set(syrups);
+
+    const normWeights = (src, set, label) => {
+      const out = Object.create(null);
+      for (const [rawName, raw] of Object.entries(src || {})) {
+        const key = norm(rawName);
+        if (!set.has(key)) { problems.push(`${label}: неизвестное «${key}»`); continue; }
+        const w = Number(raw);
+        if (!Number.isFinite(w) || w < 0) { problems.push(`${label}: некорректный вес у «${key}»`); continue; }
+        out[key] = w;
+      }
+      return Object.freeze(out);
+    };
+
+    const milkWeights  = normWeights(source.milkWeights,  milkSet,  'Веса молока');
+    const syrupWeights = normWeights(source.syrupWeights, syrupSet, 'Веса сиропов');
+
+    const drinks = (source.drinks || []).map((d, i) => {
+      const name = norm(d.name);
+      if (!name) problems.push(`Напиток #${i + 1}: пустое имя`);
+
+      const weight = Number(d.weight ?? 1);
+      if (!Number.isFinite(weight) || weight < 0) {
+        problems.push(`${name || `Напиток #${i + 1}`}: некорректный вес`);
+      }
+
+      const resolveList = (raw, set, label) => {
+        if (raw == null || raw === 'all') return [...set];
+        for (const s of raw.map(norm)) {
+          if (!set.has(s)) problems.push(`${name} / ${label}: неизвестное «${s}»`);
+        }
+        return raw.map(norm).filter(s => set.has(s));
+      };
+
+      const allowedMilks  = resolveList(d.milks,  milkSet,  'молоко');
+      const allowedSyrups = resolveList(d.syrups, syrupSet, 'сироп');
+
+      const pairing = Object.create(null);
+      for (const [rawMilk, rawList] of Object.entries(d.pairing || {})) {
+        const milk = norm(rawMilk);
+        if (!milkSet.has(milk)) {
+          problems.push(`${name}: pairing для неизвестного молока «${milk}»`);
+          continue;
+        }
+        if (!allowedMilks.includes(milk)) {
+          problems.push(`${name}: pairing для «${milk}», которого нет в молоке напитка`);
+        }
+        for (const s of rawList.map(norm)) {
+          if (!syrupSet.has(s)) problems.push(`${name} / ${milk}: неизвестный сироп «${s}»`);
+        }
+        pairing[milk] = Object.freeze(rawList.map(norm).filter(s => syrupSet.has(s)));
+      }
+
+      return Object.freeze({
+        name,
+        weight: Number.isFinite(weight) && weight >= 0 ? weight : 1,
+        milks:  Object.freeze(allowedMilks),
+        syrups: Object.freeze(allowedSyrups),
+        pairing: Object.freeze(pairing)
+      });
+    });
+
+    if (!drinks.length) problems.push('Напитки: список пуст');
+
+    return Object.freeze({
+      milks:        Object.freeze(milks),
+      syrups:       Object.freeze(syrups),
+      milkWeights,
+      syrupWeights,
+      drinks:       Object.freeze(drinks),
+      problems:     Object.freeze(problems)
+    });
+  }
+
+  function loadSource() {
+    try {
+      const raw = localStorage.getItem(STORAGE_KEY);
+      if (!raw) return null;
+      const p = JSON.parse(raw);
+      if (!p || !Array.isArray(p.milks) || !Array.isArray(p.syrups) || !Array.isArray(p.drinks)) {
+        return null;
+      }
+      return p;
+    } catch (e) {
+      return null;
+    }
+  }
+
+  let MENU_SOURCE = loadSource() || JSON.parse(JSON.stringify(DEFAULT_MENU));
+  let CONFIG = buildMenu(MENU_SOURCE);
+
+  if (CONFIG.problems.length) {
+    console.warn('[menu] найдены проблемы:\n  ' + CONFIG.problems.join('\n  '));
+  }
+
+  /* ============================================================
+     UTILS
+     ============================================================ */
   const TAU = Math.PI * 2;
+  const PI = Math.PI;
+  const normalizeAngle = a => ((a % TAU) + TAU) % TAU;
+  const sum = arr => arr.reduce((a, b) => a + b, 0);
+  const delay = ms => new Promise(r => setTimeout(r, ms));
+  const nextFrame = () => new Promise(r => requestAnimationFrame(r));
+
+  function weightedIndex(items, getWeight) {
+    const weights = items.map(it => {
+      const w = Number(getWeight(it));
+      return Number.isFinite(w) && w > 0 ? w : 0;
+    });
+    const total = sum(weights);
+    if (total <= 0) return -1;
+    let r = Math.random() * total;
+    for (let i = 0; i < weights.length; i++) {
+      r -= weights[i];
+      if (r < 0) return i;
+    }
+    return weights.length - 1;
+  }
+
+  const drinkWeight = d => (d && d.weight != null) ? Number(d.weight) : 1;
+  const milkWeight  = name => {
+    const w = CONFIG.milkWeights[name];
+    return w != null ? Number(w) : 1;
+  };
+  const syrupWeight = name => {
+    const w = CONFIG.syrupWeights[name];
+    return w != null ? Number(w) : 1;
+  };
 
   function getAllowedMilks(drink) {
-    if (!drink) return CONFIG.milks.slice();
-    const allowed = drink.milks;
-    if (allowed == null || allowed === 'all') return CONFIG.milks.slice();
-    const filtered = CONFIG.milks.filter(function (m) {
-      return allowed.indexOf(m) !== -1;
-    });
+    if (!drink || drink.milks == null || drink.milks === 'all') {
+      return CONFIG.milks.slice();
+    }
+    const filtered = CONFIG.milks.filter(m => drink.milks.includes(m));
     return filtered.length ? filtered : ['Без молока'];
   }
 
   function getAllowedSyrups(drink, milk) {
     if (!drink) return CONFIG.syrups.slice();
-    let allowed = drink.syrups;
-    if (drink.pairing && milk &&
-        Object.prototype.hasOwnProperty.call(drink.pairing, milk)) {
-      allowed = drink.pairing[milk];
-    }
+    const override = drink.pairing && milk && drink.pairing[milk];
+    const allowed = override || drink.syrups;
     if (allowed == null || allowed === 'all') return CONFIG.syrups.slice();
-    const filtered = CONFIG.syrups.filter(function (s) {
-      return allowed.indexOf(s) !== -1;
-    });
+    const filtered = CONFIG.syrups.filter(s => allowed.includes(s));
     return filtered.length ? filtered : ['Без сиропа'];
   }
 
-  function colorFor(i, n) {
-    const palette = CONFIG.wheel.palette;
-    let idx = i % palette.length;
-    if (i === n - 1 && n % palette.length === 1 && palette.length > 2) {
-      idx = 2;
-    }
-    return palette[idx];
+  function makeWeightFn(compatible, globalWeightFn) {
+    const set = new Set(compatible);
+    const anyPositive = compatible.some(n => globalWeightFn(n) > 0);
+    const fallback = anyPositive ? null : compatible[0];
+    return function (name) {
+      if (!set.has(name)) return 0;
+      const w = globalWeightFn(name);
+      if (w > 0) return w;
+      return name === fallback ? 1 : 0;
+    };
   }
 
-  const state = {
-    rotation: 0,
-    busy: false,
-    drink: null,
-    milk: null,
-    syrup: null
+  /* ============================================================
+     DOM
+     ============================================================ */
+  const $ = id => document.getElementById(id);
+
+  const dom = {
+    canvas:     $('wheel'),
+    milkCubes:  $('milkCubes'),
+    syrupCubes: $('syrupCubes'),
+    resDrink:   $('resDrink'),
+    resMilk:    $('resMilk'),
+    resSyrup:   $('resSyrup'),
+    pickBtn:    $('pickBtn'),
+    resetBtn:   $('resetBtn')
   };
 
-  const canvas      = document.getElementById('wheel');
-  const ctx         = canvas.getContext('2d');
-  const wrap        = canvas.parentElement;
+  const ctx = dom.canvas.getContext('2d');
+  const wrap = dom.canvas.parentElement;
 
-  const milkCubesEl = document.getElementById('milkCubes');
-  const syrupCubesEl= document.getElementById('syrupCubes');
+  /* ============================================================
+     WHEEL
+     ============================================================ */
+  const wheel = (function () {
+    let size = 0;
+    let R = 0;
+    let rotation = 0;
 
-  const resDrink    = document.getElementById('resDrink');
-  const resMilk     = document.getElementById('resMilk');
-  const resSyrup    = document.getElementById('resSyrup');
+    const DEFAULT_PALETTE = [
+      { bg: '#403830', fg: '#f7f1e6' },
+      { bg: '#e7dbc8', fg: '#3a322a' },
+      { bg: '#9c8464', fg: '#fffaf2' },
+      { bg: '#f4ece0', fg: '#3a322a' },
+      { bg: '#6e6052', fg: '#f7f1e6' },
+      { bg: '#cdb894', fg: '#3a322a' },
+      { bg: '#5a4a3a', fg: '#f7f1e6' },
+      { bg: '#d9c9a8', fg: '#3a322a' }
+    ];
 
-  const pickBtn     = document.getElementById('pickBtn');
-  const resetBtn    = document.getElementById('resetBtn');
-
-  let size = 0;
-  let R = 0;
-
-  function resize() {
-    const w = wrap.clientWidth;
-    const h = wrap.clientHeight;
-    if (!w || !h) return;
-
-    const cs = getComputedStyle(wrap);
-    const padX = parseFloat(cs.paddingLeft) + parseFloat(cs.paddingRight);
-    const padY = parseFloat(cs.paddingTop)  + parseFloat(cs.paddingBottom);
-
-    const s = Math.floor(Math.min(w - padX, h - padY, 480));
-    if (s < 60 || s === size) return;
-
-    size = s;
-    const dpr = Math.min(window.devicePixelRatio || 1, 3);
-
-    canvas.width  = Math.round(size * dpr);
-    canvas.height = Math.round(size * dpr);
-    canvas.style.width  = size + 'px';
-    canvas.style.height = size + 'px';
-
-    ctx.setTransform(dpr, 0, 0, dpr, 0, 0);
-    R = size / 2 - 6;
-    draw();
-  }
-
-  /* ---------- автоподбор размера шрифта для подписи ---------- */
-  function fitLabel(text, maxLen, baseFs, minFs) {
-    let fs = baseFs;
-
-    // 1) одна строка, плавно уменьшаем шрифт
-    for (; fs >= minFs; fs -= 0.5) {
-      ctx.font = '600 ' + fs + 'px Georgia, "Times New Roman", serif';
-      if (ctx.measureText(text).width <= maxLen) {
-        return { fontSize: fs, lines: [text] };
-      }
+    function colorFor(i, n) {
+      const palette = DEFAULT_PALETTE;
+      let idx = i % palette.length;
+      if (i === n - 1 && n % palette.length === 1 && palette.length > 2) idx = 2;
+      return palette[idx];
     }
 
-    // 2) две строки по словам — ищем лучшую точку разбиения
-    const words = text.split(' ');
+    function fitLabel(text, maxLen, baseFs, minFs) {
+      const measure = (t, fs) => {
+        ctx.font = `600 ${fs}px Georgia, "Times New Roman", serif`;
+        return ctx.measureText(t).width;
+      };
 
-    if (words.length > 1) {
-      fs = baseFs;
-      for (; fs >= minFs; fs -= 0.5) {
-        ctx.font = '600 ' + fs + 'px Georgia, "Times New Roman", serif';
+      for (let fs = baseFs; fs >= minFs; fs -= 0.5) {
+        if (measure(text, fs) <= maxLen) return { fontSize: fs, lines: [text] };
+      }
+
+      const words = text.split(' ');
+      if (words.length === 1) return { fontSize: minFs, lines: [text] };
+
+      const bestSplit = fs => {
         let bestMid = 1, bestW = Infinity;
         for (let m = 1; m < words.length; m++) {
           const l1 = words.slice(0, m).join(' ');
           const l2 = words.slice(m).join(' ');
-          const w = Math.max(ctx.measureText(l1).width,
-                             ctx.measureText(l2).width);
+          const w = Math.max(measure(l1, fs), measure(l2, fs));
           if (w < bestW) { bestW = w; bestMid = m; }
         }
-        if (bestW <= maxLen) {
+        return { mid: bestMid, width: bestW };
+      };
+
+      for (let fs = baseFs; fs >= minFs; fs -= 0.5) {
+        const { mid, width } = bestSplit(fs);
+        if (width <= maxLen) {
           return {
             fontSize: fs,
-            lines: [words.slice(0, bestMid).join(' '),
-                    words.slice(bestMid).join(' ')]
+            lines: [words.slice(0, mid).join(' '), words.slice(mid).join(' ')]
           };
         }
       }
 
-      // 2 строки минимальным шрифтом (даже если чуть шире)
-      ctx.font = '600 ' + minFs + 'px Georgia, "Times New Roman", serif';
-      let bestMid = 1, bestW = Infinity;
-      for (let m = 1; m < words.length; m++) {
-        const l1 = words.slice(0, m).join(' ');
-        const l2 = words.slice(m).join(' ');
-        const w = Math.max(ctx.measureText(l1).width,
-                           ctx.measureText(l2).width);
-        if (w < bestW) { bestW = w; bestMid = m; }
-      }
+      const { mid } = bestSplit(minFs);
       return {
         fontSize: minFs,
-        lines: [words.slice(0, bestMid).join(' '),
-                words.slice(bestMid).join(' ')]
+        lines: [words.slice(0, mid).join(' '), words.slice(mid).join(' ')]
       };
     }
 
-    // 3) одно длинное слово — минимальный шрифт в одну строку
-    return { fontSize: minFs, lines: [text] };
-  }
+    function drawBase() {
+      ctx.beginPath();
+      ctx.arc(0, 0, R + 3, 0, TAU);
+      ctx.fillStyle = 'rgba(80,62,40,.06)';
+      ctx.fill();
 
-  function draw() {
-    if (size < 10) return;
+      ctx.beginPath();
+      ctx.arc(0, 0, R + 1, 0, TAU);
+      ctx.fillStyle = '#fffdf8';
+      ctx.fill();
+      ctx.lineWidth = 1;
+      ctx.strokeStyle = '#e4dbcb';
+      ctx.stroke();
+    }
 
-    const drinks = CONFIG.drinks;
-    const n = drinks.length;
-    const c = size / 2;
-
-    ctx.clearRect(0, 0, size, size);
-    ctx.save();
-    ctx.translate(c, c);
-
-    ctx.beginPath();
-    ctx.arc(0, 0, R + 3, 0, TAU);
-    ctx.fillStyle = 'rgba(80,62,40,.06)';
-    ctx.fill();
-
-    ctx.beginPath();
-    ctx.arc(0, 0, R + 1, 0, TAU);
-    ctx.fillStyle = '#fffdf8';
-    ctx.fill();
-    ctx.lineWidth = 1;
-    ctx.strokeStyle = '#e4dbcb';
-    ctx.stroke();
-
-    if (n > 0) {
+    function drawSectors() {
+      const n = CONFIG.drinks.length;
       const seg = TAU / n;
 
       ctx.save();
-      ctx.rotate(state.rotation);
+      ctx.rotate(rotation);
 
       for (let i = 0; i < n; i++) {
-        const a0 = -Math.PI / 2 + i * seg;
+        const a0 = -PI / 2 + i * seg;
         const a1 = a0 + seg;
         const col = colorFor(i, n);
 
@@ -700,38 +1161,41 @@
         ctx.closePath();
         ctx.fillStyle = col.bg;
         ctx.fill();
-
         ctx.lineWidth = 1.5;
         ctx.strokeStyle = 'rgba(255,253,248,.55)';
         ctx.stroke();
       }
 
-      ctx.restore(); // выходим из поворота колеса — рисуем подписи без него
+      ctx.restore();
+    }
 
-      /* ----- подписи ----- */
+    function drawLabels() {
+      const drinks = CONFIG.drinks;
+      const n = drinks.length;
+      const seg = TAU / n;
+
       const hub = Math.max(18, R * 0.15);
-      const outer = R - 8;                    // внешний край текста
-      const maxLen = outer - hub - 6;         // доступная радиальная длина
-
+      const outer = R - 8;
+      const maxLen = outer - hub - 6;
       const baseFs = Math.max(9, Math.min(16, R * 0.085));
       const minFs = 7;
 
       for (let i = 0; i < n; i++) {
-        const mid = -Math.PI / 2 + (i + 0.5) * seg;
+        const mid = -PI / 2 + (i + 0.5) * seg;
         const col = colorFor(i, n);
 
         ctx.save();
-        ctx.rotate(mid + state.rotation);
+        ctx.rotate(mid + rotation);
 
-        const flip = Math.cos(mid + state.rotation) < 0;
-        if (flip) ctx.rotate(Math.PI);
+        const flip = Math.cos(mid + rotation) < 0;
+        if (flip) ctx.rotate(PI);
 
         ctx.fillStyle = col.fg;
         ctx.textAlign = flip ? 'left' : 'right';
         ctx.textBaseline = 'middle';
 
         const fit = fitLabel(drinks[i].name, maxLen, baseFs, minFs);
-        ctx.font = '600 ' + fit.fontSize + 'px Georgia, "Times New Roman", serif';
+        ctx.font = `600 ${fit.fontSize}px Georgia, "Times New Roman", serif`;
 
         const lh = fit.fontSize * 1.1;
         const startY = -((fit.lines.length - 1) * lh) / 2;
@@ -745,39 +1209,684 @@
       }
     }
 
-    /* ----- ступица ----- */
-    ctx.beginPath();
-    ctx.arc(0, 0, Math.max(18, R * 0.15), 0, TAU);
-    ctx.fillStyle = '#fffdf8';
-    ctx.fill();
-    ctx.lineWidth = 1;
-    ctx.strokeStyle = 'rgba(140,107,63,.4)';
-    ctx.stroke();
+    function drawHub() {
+      ctx.beginPath();
+      ctx.arc(0, 0, Math.max(18, R * 0.15), 0, TAU);
+      ctx.fillStyle = '#fffdf8';
+      ctx.fill();
+      ctx.lineWidth = 1;
+      ctx.strokeStyle = 'rgba(140,107,63,.4)';
+      ctx.stroke();
 
-    ctx.beginPath();
-    ctx.arc(0, 0, 2.6, 0, TAU);
-    ctx.fillStyle = 'rgba(140,107,63,.55)';
-    ctx.fill();
+      ctx.beginPath();
+      ctx.arc(0, 0, 2.6, 0, TAU);
+      ctx.fillStyle = 'rgba(140,107,63,.55)';
+      ctx.fill();
+    }
 
-    ctx.restore();
-  }
+    function draw() {
+      if (size < 10) return;
+      ctx.clearRect(0, 0, size, size);
+      ctx.save();
+      ctx.translate(size / 2, size / 2);
 
-  function renderCubes(container, items) {
-    container.innerHTML = '';
-    items.forEach(function (name) {
-      const d = document.createElement('div');
-      d.className = 'cube';
-      d.textContent = name;
-      container.appendChild(d);
-    });
-  }
+      drawBase();
+      if (CONFIG.drinks.length > 0) {
+        drawSectors();
+        drawLabels();
+      }
+      drawHub();
 
-  function setActiveCube(container, index) {
-    const list = container.children;
-    for (let k = 0; k < list.length; k++) list[k].classList.remove('active');
-    if (list[index]) list[index].classList.add('active');
-  }
+      ctx.restore();
+    }
 
+    function resize() {
+      const w = wrap.clientWidth;
+      const h = wrap.clientHeight;
+      if (!w || !h) return;
+
+      const cs = getComputedStyle(wrap);
+      const padX = parseFloat(cs.paddingLeft) + parseFloat(cs.paddingRight);
+      const padY = parseFloat(cs.paddingTop)  + parseFloat(cs.paddingBottom);
+
+      const s = Math.floor(Math.min(w - padX, h - padY, 480));
+      if (s < 60) return;
+
+      size = s;
+      const dpr = Math.min(window.devicePixelRatio || 1, 3);
+      dom.canvas.width  = Math.round(size * dpr);
+      dom.canvas.height = Math.round(size * dpr);
+      dom.canvas.style.width  = size + 'px';
+      dom.canvas.style.height = size + 'px';
+
+      ctx.setTransform(dpr, 0, 0, dpr, 0, 0);
+      R = size / 2 - 6;
+      draw();
+    }
+
+    function targetRotation(target) {
+      const seg = TAU / CONFIG.drinks.length;
+      const desired = normalizeAngle(-(target + 0.5) * seg);
+      const cur = normalizeAngle(rotation);
+      const delta = normalizeAngle(desired - cur);
+      const turns = 5 + Math.floor(Math.random() * 3);
+      return rotation + turns * TAU + delta;
+    }
+
+    async function spin() {
+      const drinks = CONFIG.drinks;
+      if (!drinks.length) return null;
+
+      const target = weightedIndex(drinks, drinkWeight);
+      if (target < 0) return null;
+
+      const from = rotation;
+      const to = targetRotation(target);
+      const dur = 3200;
+      const t0 = performance.now();
+
+      let t = 0;
+      while (t < 1) {
+        const now = await nextFrame();
+        t = Math.min(1, (now - t0) / dur);
+        const e = 1 - Math.pow(1 - t, 5);
+        rotation = from + (to - from) * e;
+        draw();
+      }
+
+      rotation = normalizeAngle(rotation);
+      draw();
+      return drinks[target];
+    }
+
+    function reset() {
+      rotation = 0;
+      draw();
+    }
+
+    return { resize, spin, reset };
+  })();
+
+  /* ============================================================
+     DICE
+     ============================================================ */
+  const dice = (function () {
+    function renderCubes(container, items, weightFn) {
+      container.innerHTML = '';
+      const frag = document.createDocumentFragment();
+      for (const name of items) {
+        const el = document.createElement('div');
+        el.className = 'cube' + (weightFn(name) > 0 ? '' : ' disabled');
+        el.textContent = name;
+        frag.appendChild(el);
+      }
+      container.appendChild(frag);
+    }
+
+    function setActive(container, index) {
+      const list = container.children;
+      for (let k = 0; k < list.length; k++) list[k].classList.remove('active');
+      if (list[index]) list[index].classList.add('active');
+    }
+
+    async function roll(container, items, weightFn) {
+      const eligible = [];
+      for (let i = 0; i < items.length; i++) {
+        if (weightFn(items[i]) > 0) eligible.push(i);
+      }
+      if (!eligible.length) return null;
+
+      const target = weightedIndex(items, weightFn);
+      if (target < 0) return null;
+
+      if (eligible.length === 1) {
+        setActive(container, eligible[0]);
+        await delay(320);
+        return items[eligible[0]];
+      }
+
+      const total = 10 + Math.floor(Math.random() * 7);
+      let last = -1;
+
+      for (let step = 0; step < total; step++) {
+        let r;
+        do {
+          r = eligible[Math.floor(Math.random() * eligible.length)];
+        } while (eligible.length > 1 && r === last);
+
+        last = r;
+        setActive(container, r);
+
+        const p = (step + 1) / total;
+        await delay(40 + Math.pow(p, 3) * 200);
+      }
+
+      setActive(container, target);
+      return items[target];
+    }
+
+    return { renderCubes, roll };
+  })();
+
+  /* ============================================================
+     MENU EDITOR
+     ============================================================ */
+  const menuEditor = (function () {
+    const els = {
+      overlay:   $('overlay'),
+      drawer:    $('drawer'),
+      openBtn:   $('settingsBtn'),
+      closeBtn:  $('closeDrawer'),
+      milkList:  $('milkList'),
+      syrupList: $('syrupList'),
+      drinkList: $('drinkList'),
+      milkCount: $('milkCount'),
+      syrupCount:$('syrupCount'),
+      drinkCount:$('drinkCount'),
+      addMilk:   $('addMilkBtn'),
+      addSyrup:  $('addSyrupBtn'),
+      addDrink:  $('addDrinkBtn'),
+      saveBtn:   $('saveSettings'),
+      resetBtn:  $('resetDefaults'),
+      err:       $('err')
+    };
+
+    let draft = null;
+    const clone = o => JSON.parse(JSON.stringify(o));
+
+    function open() {
+      draft = clone(MENU_SOURCE);
+      els.err.textContent = '';
+      renderAll();
+      els.drawer.classList.add('on');
+      els.overlay.classList.add('on');
+      els.drawer.setAttribute('aria-hidden', 'false');
+    }
+
+    function close() {
+      els.drawer.classList.remove('on');
+      els.overlay.classList.remove('on');
+      els.drawer.setAttribute('aria-hidden', 'true');
+      draft = null;
+    }
+
+    function renderAll() {
+      renderMilks();
+      renderSyrups();
+      renderDrinks();
+    }
+
+    function createSimpleRow(opts) {
+      const row = document.createElement('div');
+      row.className = 'row';
+
+      const nameInp = document.createElement('input');
+      nameInp.type = 'text';
+      nameInp.value = opts.name;
+      nameInp.placeholder = 'Название';
+      nameInp.addEventListener('blur', () => {
+        const v = nameInp.value.trim();
+        if (!v || v === opts.name) { nameInp.value = opts.name; return; }
+        opts.onRename(v);
+      });
+      nameInp.addEventListener('keydown', e => {
+        if (e.key === 'Enter') nameInp.blur();
+      });
+
+      const weightInp = document.createElement('input');
+      weightInp.type = 'number';
+      weightInp.min = '0';
+      weightInp.step = '0.5';
+      weightInp.value = opts.weight;
+      weightInp.title = 'Вес (0 — не выпадает)';
+      weightInp.addEventListener('input', () => {
+        const v = parseFloat(weightInp.value);
+        if (!isNaN(v) && v >= 0) opts.onWeight(v);
+      });
+
+      const delBtn = document.createElement('button');
+      delBtn.className = 'row-del';
+      delBtn.textContent = '×';
+      delBtn.title = 'Удалить';
+      delBtn.addEventListener('click', opts.onDelete);
+
+      row.append(nameInp, weightInp, delBtn);
+      return row;
+    }
+
+    function renderMilks() {
+      els.milkList.innerHTML = '';
+      els.milkCount.textContent = draft.milks.length;
+      draft.milks.forEach(name => {
+        els.milkList.appendChild(createSimpleRow({
+          name,
+          weight: draft.milkWeights && draft.milkWeights[name] != null
+            ? draft.milkWeights[name] : 1,
+          onRename: newName => renameMilk(name, newName),
+          onWeight: w => {
+            if (!draft.milkWeights) draft.milkWeights = {};
+            draft.milkWeights[name] = w;
+          },
+          onDelete: () => deleteMilk(name)
+        }));
+      });
+    }
+
+    function renderSyrups() {
+      els.syrupList.innerHTML = '';
+      els.syrupCount.textContent = draft.syrups.length;
+      draft.syrups.forEach(name => {
+        els.syrupList.appendChild(createSimpleRow({
+          name,
+          weight: draft.syrupWeights && draft.syrupWeights[name] != null
+            ? draft.syrupWeights[name] : 1,
+          onRename: newName => renameSyrup(name, newName),
+          onWeight: w => {
+            if (!draft.syrupWeights) draft.syrupWeights = {};
+            draft.syrupWeights[name] = w;
+          },
+          onDelete: () => deleteSyrup(name)
+        }));
+      });
+    }
+
+    function renameMilk(oldName, newName) {
+      if (oldName === newName) return;
+      if (draft.milks.includes(newName)) {
+        els.err.textContent = `Молоко «${newName}» уже есть`;
+        renderMilks();
+        return;
+      }
+      els.err.textContent = '';
+      draft.milks = draft.milks.map(m => m === oldName ? newName : m);
+      if (draft.milkWeights && draft.milkWeights[oldName] != null) {
+        draft.milkWeights[newName] = draft.milkWeights[oldName];
+        delete draft.milkWeights[oldName];
+      }
+      draft.drinks.forEach(d => {
+        if (d.milks) d.milks = d.milks.map(m => m === oldName ? newName : m);
+        if (d.pairing && d.pairing[oldName]) {
+          d.pairing[newName] = d.pairing[oldName];
+          delete d.pairing[oldName];
+        }
+      });
+      renderMilks();
+      renderDrinks();
+    }
+
+    function deleteMilk(name) {
+      els.err.textContent = '';
+      draft.milks = draft.milks.filter(m => m !== name);
+      if (draft.milkWeights) delete draft.milkWeights[name];
+      draft.drinks.forEach(d => {
+        if (d.milks) d.milks = d.milks.filter(m => m !== name);
+        if (d.pairing) delete d.pairing[name];
+      });
+      renderMilks();
+      renderDrinks();
+    }
+
+    function renameSyrup(oldName, newName) {
+      if (oldName === newName) return;
+      if (draft.syrups.includes(newName)) {
+        els.err.textContent = `Сироп «${newName}» уже есть`;
+        renderSyrups();
+        return;
+      }
+      els.err.textContent = '';
+      draft.syrups = draft.syrups.map(s => s === oldName ? newName : s);
+      if (draft.syrupWeights && draft.syrupWeights[oldName] != null) {
+        draft.syrupWeights[newName] = draft.syrupWeights[oldName];
+        delete draft.syrupWeights[oldName];
+      }
+      draft.drinks.forEach(d => {
+        if (d.syrups) d.syrups = d.syrups.map(s => s === oldName ? newName : s);
+        if (d.pairing) {
+          Object.keys(d.pairing).forEach(m => {
+            d.pairing[m] = d.pairing[m].map(s => s === oldName ? newName : s);
+          });
+        }
+      });
+      renderSyrups();
+      renderDrinks();
+    }
+
+    function deleteSyrup(name) {
+      els.err.textContent = '';
+      draft.syrups = draft.syrups.filter(s => s !== name);
+      if (draft.syrupWeights) delete draft.syrupWeights[name];
+      draft.drinks.forEach(d => {
+        if (d.syrups) d.syrups = d.syrups.filter(s => s !== name);
+        if (d.pairing) {
+          Object.keys(d.pairing).forEach(m => {
+            d.pairing[m] = d.pairing[m].filter(s => s !== name);
+          });
+        }
+      });
+      renderSyrups();
+      renderDrinks();
+    }
+
+    function renderDrinks() {
+      els.drinkList.innerHTML = '';
+      els.drinkCount.textContent = draft.drinks.length;
+      draft.drinks.forEach((drink, index) => {
+        els.drinkList.appendChild(createDrinkRow(drink, index));
+      });
+    }
+
+    function createDrinkRow(drink, index) {
+      const wrap = document.createElement('div');
+      wrap.className = 'drink-row';
+
+      const head = document.createElement('div');
+      head.className = 'drink-head';
+
+      const expandBtn = document.createElement('button');
+      expandBtn.className = 'expand-btn';
+      expandBtn.type = 'button';
+      expandBtn.textContent = '▸';
+
+      const nameInp = document.createElement('input');
+      nameInp.type = 'text';
+      nameInp.value = drink.name;
+      nameInp.addEventListener('blur', () => {
+        const v = nameInp.value.trim();
+        if (!v || v === drink.name) { nameInp.value = drink.name; return; }
+        if (draft.drinks.some((d, j) => j !== index && d.name === v)) {
+          els.err.textContent = `Напиток «${v}» уже есть`;
+          nameInp.value = drink.name;
+          return;
+        }
+        els.err.textContent = '';
+        drink.name = v;
+        renderDrinks();
+      });
+      nameInp.addEventListener('keydown', e => {
+        if (e.key === 'Enter') nameInp.blur();
+      });
+
+      const weightInp = document.createElement('input');
+      weightInp.type = 'number';
+      weightInp.min = '0';
+      weightInp.step = '0.5';
+      weightInp.value = drink.weight ?? 1;
+      weightInp.title = 'Вес (0 — не выпадает)';
+      weightInp.addEventListener('input', () => {
+        const v = parseFloat(weightInp.value);
+        if (!isNaN(v) && v >= 0) drink.weight = v;
+      });
+
+      const delBtn = document.createElement('button');
+      delBtn.className = 'row-del';
+      delBtn.type = 'button';
+      delBtn.textContent = '×';
+      delBtn.title = 'Удалить';
+      delBtn.addEventListener('click', () => {
+        draft.drinks.splice(index, 1);
+        renderDrinks();
+      });
+
+      head.append(expandBtn, nameInp, weightInp, delBtn);
+
+      const body = document.createElement('div');
+      body.className = 'drink-body';
+      body.hidden = true;
+
+      expandBtn.addEventListener('click', () => {
+        body.hidden = !body.hidden;
+        expandBtn.classList.toggle('open', !body.hidden);
+      });
+
+      body.appendChild(buildMilkChips(drink));
+      body.appendChild(buildSyrupChips(drink));
+      body.appendChild(buildPairings(drink));
+
+      wrap.append(head, body);
+      return wrap;
+    }
+
+    function buildMilkChips(drink) {
+      const f = document.createElement('div');
+      f.className = 'field';
+      const lbl = document.createElement('label');
+      lbl.textContent = 'Молоко';
+      f.appendChild(lbl);
+
+      if (!drink.milks) drink.milks = draft.milks.slice();
+
+      const chips = document.createElement('div');
+      chips.className = 'chips';
+
+      draft.milks.forEach(m => {
+        chips.appendChild(makeChip(m, drink.milks.includes(m), checked => {
+          if (checked) {
+            if (!drink.milks.includes(m)) drink.milks.push(m);
+          } else {
+            drink.milks = drink.milks.filter(x => x !== m);
+          }
+        }));
+      });
+
+      f.appendChild(chips);
+      return f;
+    }
+
+    function buildSyrupChips(drink) {
+      const f = document.createElement('div');
+      f.className = 'field';
+      const lbl = document.createElement('label');
+      lbl.textContent = 'Сиропы';
+      f.appendChild(lbl);
+
+      if (!drink.syrups) drink.syrups = draft.syrups.slice();
+
+      const chips = document.createElement('div');
+      chips.className = 'chips';
+
+      draft.syrups.forEach(s => {
+        chips.appendChild(makeChip(s, drink.syrups.includes(s), checked => {
+          if (checked) {
+            if (!drink.syrups.includes(s)) drink.syrups.push(s);
+          } else {
+            drink.syrups = drink.syrups.filter(x => x !== s);
+          }
+        }));
+      });
+
+      f.appendChild(chips);
+      return f;
+    }
+
+    function makeChip(label, checked, onChange) {
+      const chip = document.createElement('label');
+      chip.className = 'chip' + (checked ? ' checked' : '');
+
+      const cb = document.createElement('input');
+      cb.type = 'checkbox';
+      cb.checked = checked;
+      cb.addEventListener('change', () => {
+        chip.classList.toggle('checked', cb.checked);
+        onChange(cb.checked);
+      });
+
+      chip.appendChild(cb);
+      chip.appendChild(document.createTextNode(label));
+      return chip;
+    }
+
+    function buildPairings(drink) {
+      const f = document.createElement('div');
+      f.className = 'field';
+      const lbl = document.createElement('label');
+      lbl.textContent = 'Уточнения по молоку (опционально)';
+      f.appendChild(lbl);
+
+      if (!drink.pairing) drink.pairing = {};
+      const container = document.createElement('div');
+
+      Object.keys(drink.pairing).forEach(milk => {
+        const box = document.createElement('div');
+        box.className = 'pairing';
+
+        const hd = document.createElement('div');
+        hd.className = 'pairing-head';
+
+        const sel = document.createElement('select');
+        (drink.milks && drink.milks.length ? drink.milks : draft.milks).forEach(m => {
+          const opt = document.createElement('option');
+          opt.value = m;
+          opt.textContent = m;
+          if (m === milk) opt.selected = true;
+          else if (drink.pairing[m]) opt.disabled = true;
+          sel.appendChild(opt);
+        });
+        sel.addEventListener('change', () => {
+          const newMilk = sel.value;
+          if (newMilk === milk || drink.pairing[newMilk]) return;
+          drink.pairing[newMilk] = drink.pairing[milk];
+          delete drink.pairing[milk];
+          renderDrinks();
+        });
+
+        const delBtn = document.createElement('button');
+        delBtn.className = 'row-del';
+        delBtn.type = 'button';
+        delBtn.textContent = '×';
+        delBtn.addEventListener('click', () => {
+          delete drink.pairing[milk];
+          renderDrinks();
+        });
+
+        hd.append(sel, delBtn);
+        box.appendChild(hd);
+
+        const allowed = drink.pairing[milk];
+        const chips = document.createElement('div');
+        chips.className = 'chips';
+        draft.syrups.forEach(s => {
+          chips.appendChild(makeChip(s, allowed.includes(s), checked => {
+            if (checked) {
+              if (!allowed.includes(s)) allowed.push(s);
+            } else {
+              const idx = allowed.indexOf(s);
+              if (idx >= 0) allowed.splice(idx, 1);
+            }
+          }));
+        });
+        box.appendChild(chips);
+
+        container.appendChild(box);
+      });
+
+      const addBtn = document.createElement('button');
+      addBtn.type = 'button';
+      addBtn.className = 'add-btn';
+      addBtn.style.marginTop = '8px';
+      addBtn.style.width = '100%';
+      addBtn.textContent = '+ уточнить для молока';
+      addBtn.addEventListener('click', () => {
+        const used = new Set(Object.keys(drink.pairing));
+        const available = (drink.milks && drink.milks.length ? drink.milks : draft.milks)
+          .find(m => !used.has(m));
+        if (!available) {
+          els.err.textContent = 'Для всех молок этого напитка уже есть уточнения';
+          return;
+        }
+        els.err.textContent = '';
+        drink.pairing[available] = (drink.syrups && drink.syrups.length
+          ? drink.syrups : draft.syrups).slice();
+        renderDrinks();
+      });
+
+      f.appendChild(container);
+      f.appendChild(addBtn);
+      return f;
+    }
+
+    function addMilk() {
+      let i = 1, name;
+      do { name = `Новое молоко ${i++}`; } while (draft.milks.includes(name));
+      draft.milks.push(name);
+      if (!draft.milkWeights) draft.milkWeights = {};
+      draft.milkWeights[name] = 1;
+      renderMilks();
+      renderDrinks();
+    }
+
+    function addSyrup() {
+      let i = 1, name;
+      do { name = `Новый сироп ${i++}`; } while (draft.syrups.includes(name));
+      draft.syrups.push(name);
+      if (!draft.syrupWeights) draft.syrupWeights = {};
+      draft.syrupWeights[name] = 1;
+      renderSyrups();
+      renderDrinks();
+    }
+
+    function addDrink() {
+      let i = 1, name;
+      do { name = `Новый напиток ${i++}`; } while (draft.drinks.some(d => d.name === name));
+      draft.drinks.push({
+        name,
+        weight: 1,
+        milks: draft.milks.slice(),
+        syrups: draft.syrups.slice()
+      });
+      renderDrinks();
+    }
+
+    function save() {
+      const built = buildMenu(draft);
+      if (built.problems.length) {
+        els.err.textContent = 'Исправьте:\n' + built.problems.join('\n');
+        return;
+      }
+      MENU_SOURCE = clone(draft);
+      CONFIG = built;
+      try {
+        localStorage.setItem(STORAGE_KEY, JSON.stringify(MENU_SOURCE));
+      } catch (e) { /* quota — игнор */ }
+      wheel.reset();
+      resetResults();
+      close();
+    }
+
+    function resetToDefaults() {
+      draft = clone(DEFAULT_MENU);
+      els.err.textContent = '';
+      renderAll();
+    }
+
+    function resetResults() {
+      setResult(dom.resDrink, null);
+      setResult(dom.resMilk, null);
+      setResult(dom.resSyrup, null);
+      dice.renderCubes(dom.milkCubes,  CONFIG.milks,  milkWeight);
+      dice.renderCubes(dom.syrupCubes, CONFIG.syrups, syrupWeight);
+    }
+
+    function wire() {
+      els.openBtn.addEventListener('click', open);
+      els.closeBtn.addEventListener('click', close);
+      els.overlay.addEventListener('click', close);
+      els.addMilk.addEventListener('click', addMilk);
+      els.addSyrup.addEventListener('click', addSyrup);
+      els.addDrink.addEventListener('click', addDrink);
+      els.saveBtn.addEventListener('click', save);
+      els.resetBtn.addEventListener('click', resetToDefaults);
+
+      document.addEventListener('keydown', e => {
+        if (e.key === 'Escape' && els.drawer.classList.contains('on')) close();
+      });
+    }
+
+    return { wire };
+  })();
+
+  /* ============================================================
+     APP
+     ============================================================ */
   function setResult(el, value) {
     el.textContent = value || '—';
     el.classList.remove('flash');
@@ -787,166 +1896,81 @@
     }
   }
 
-  function spinWheel() {
-    return new Promise(function (resolve) {
-      const drinks = CONFIG.drinks;
-      const n = drinks.length;
-      if (n === 0) { resolve(null); return; }
-
-      const seg = TAU / n;
-      const target = Math.floor(Math.random() * n);
-
-      const start = state.rotation;
-      const cur = ((start % TAU) + TAU) % TAU;
-      const desired = ((-(target + 0.5) * seg) % TAU + TAU) % TAU;
-      const delta = (desired - cur + TAU) % TAU;
-
-      const turns = CONFIG.wheel.extraTurnsMin +
-        Math.floor(Math.random() *
-          (CONFIG.wheel.extraTurnsMax - CONFIG.wheel.extraTurnsMin + 1));
-
-      const to = start + turns * TAU + delta;
-      const dur = CONFIG.wheel.spinDurationMs;
-      const t0 = performance.now();
-
-      function frame(now) {
-        const t = Math.min(1, (now - t0) / dur);
-        const e = 1 - Math.pow(1 - t, 5);
-        state.rotation = start + (to - start) * e;
-        draw();
-        if (t < 1) {
-          requestAnimationFrame(frame);
-        } else {
-          state.rotation = ((state.rotation % TAU) + TAU) % TAU;
-          draw();
-          resolve(drinks[target]);
-        }
-      }
-      requestAnimationFrame(frame);
-    });
+  function setButtonLabel(text) {
+    dom.pickBtn.textContent = text;
   }
-
-  function rollCubes(container, items) {
-    return new Promise(function (resolve) {
-      if (!items.length) { resolve(null); return; }
-
-      if (items.length === 1) {
-        setActiveCube(container, 0);
-        setTimeout(function () { resolve(items[0]); },
-          CONFIG.dice.singlePauseMs);
-        return;
-      }
-
-      const n = items.length;
-      const target = Math.floor(Math.random() * n);
-      const total = CONFIG.dice.minTicks +
-        Math.floor(Math.random() *
-          (CONFIG.dice.maxTicks - CONFIG.dice.minTicks + 1));
-
-      let step = 0;
-      let last = -1;
-
-      function tick() {
-        if (step >= total) {
-          setActiveCube(container, target);
-          resolve(items[target]);
-          return;
-        }
-        let r;
-        do { r = Math.floor(Math.random() * n); }
-        while (n > 1 && r === last);
-
-        last = r;
-        setActiveCube(container, r);
-
-        step++;
-        const p = step / total;
-        const delay = CONFIG.dice.baseDelayMs +
-          Math.pow(p, CONFIG.dice.delayPower) * CONFIG.dice.extraDelayMs;
-        setTimeout(tick, delay);
-      }
-      tick();
-    });
-  }
-
-  function setButtonLabel(text) { pickBtn.textContent = text; }
 
   function resetResults() {
-    state.drink = null;
-    state.milk = null;
-    state.syrup = null;
-
-    setResult(resDrink, null);
-    setResult(resMilk, null);
-    setResult(resSyrup, null);
-
-    renderCubes(milkCubesEl, CONFIG.milks);
-    renderCubes(syrupCubesEl, CONFIG.syrups);
+    setResult(dom.resDrink, null);
+    setResult(dom.resMilk, null);
+    setResult(dom.resSyrup, null);
+    dice.renderCubes(dom.milkCubes,  CONFIG.milks,  milkWeight);
+    dice.renderCubes(dom.syrupCubes, CONFIG.syrups, syrupWeight);
   }
 
+  let busy = false;
+
   async function pick() {
-    if (state.busy) return;
-    state.busy = true;
-    pickBtn.disabled = true;
-    resetBtn.disabled = true;
+    if (busy) return;
+    busy = true;
+    dom.pickBtn.disabled = true;
+    dom.resetBtn.disabled = true;
     resetResults();
 
     try {
       setButtonLabel('Крутим колесо…');
-      const drink = await spinWheel();
-      if (!drink) { setButtonLabel('Сделать выбор'); return; }
-
-      state.drink = drink;
-      setResult(resDrink, drink.name);
+      const drink = await wheel.spin();
+      if (!drink) return;
+      setResult(dom.resDrink, drink.name);
 
       setButtonLabel('Выбираем молоко…');
-      const milks = getAllowedMilks(drink);
-      renderCubes(milkCubesEl, milks);
-      await new Promise(function (r) { setTimeout(r, 120); });
-
-      const milk = await rollCubes(milkCubesEl, milks);
-      state.milk = milk;
-      setResult(resMilk, milk);
+      const milkFn = makeWeightFn(getAllowedMilks(drink), milkWeight);
+      dice.renderCubes(dom.milkCubes, CONFIG.milks, milkFn);
+      await delay(120);
+      const milk = await dice.roll(dom.milkCubes, CONFIG.milks, milkFn);
+      setResult(dom.resMilk, milk);
 
       setButtonLabel('Выбираем сироп…');
-      const syrups = getAllowedSyrups(drink, milk);
-      renderCubes(syrupCubesEl, syrups);
-      await new Promise(function (r) { setTimeout(r, 120); });
+      const syrupFn = makeWeightFn(getAllowedSyrups(drink, milk), syrupWeight);
+      dice.renderCubes(dom.syrupCubes, CONFIG.syrups, syrupFn);
+      await delay(120);
+      const syrup = await dice.roll(dom.syrupCubes, CONFIG.syrups, syrupFn);
+      setResult(dom.resSyrup, syrup);
 
-      const syrup = await rollCubes(syrupCubesEl, syrups);
-      state.syrup = syrup;
-      setResult(resSyrup, syrup);
     } finally {
-      state.busy = false;
-      pickBtn.disabled = false;
-      resetBtn.disabled = false;
+      busy = false;
+      dom.pickBtn.disabled = false;
+      dom.resetBtn.disabled = false;
       setButtonLabel('Сделать выбор');
     }
   }
 
-  function reset() {
-    if (state.busy) return;
-    state.rotation = 0;
+  function resetAll() {
+    if (busy) return;
+    wheel.reset();
     resetResults();
-    draw();
   }
 
-  pickBtn.addEventListener('click', pick);
-  resetBtn.addEventListener('click', reset);
+  function init() {
+    dom.pickBtn.addEventListener('click', pick);
+    dom.resetBtn.addEventListener('click', resetAll);
 
-  if (window.ResizeObserver) {
-    new ResizeObserver(function () { resize(); }).observe(wrap);
-  } else {
-    window.addEventListener('resize', resize);
+    menuEditor.wire();
+
+    if (window.ResizeObserver) {
+      new ResizeObserver(() => wheel.resize()).observe(wrap);
+    } else {
+      window.addEventListener('resize', () => wheel.resize());
+    }
+    window.addEventListener('resize', () => wheel.resize());
+    window.addEventListener('orientationchange',
+      () => setTimeout(() => wheel.resize(), 200));
+
+    resetResults();
+    wheel.resize();
   }
-  window.addEventListener('resize', resize);
-  window.addEventListener('orientationchange', function () {
-    setTimeout(resize, 200);
-  });
 
-  renderCubes(milkCubesEl, CONFIG.milks);
-  renderCubes(syrupCubesEl, CONFIG.syrups);
-  resize();
+  init();
 })();
 </script>
 </body>
